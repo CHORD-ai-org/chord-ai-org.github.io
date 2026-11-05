@@ -1,0 +1,472 @@
+---
+import Base from '../../layouts/Base.astro';
+import Sigil from '../../components/Sigil.astro';
+import ProductFigure from '../../components/ProductFigure.astro';
+import { productContent } from '../../data/productContent';
+import { products } from '../../data/site';
+
+export function getStaticPaths() {
+  return productContent.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const product = products.find((p) => p.slug === entry.slug)!;
+const related = products.filter((p) => p.slug !== entry.slug);
+---
+
+<Base title={entry.title} section={product.category} description={entry.seo}>
+  <header class="product-head">
+    <div class="shell">
+      <p class="product-head__eyebrow">
+        <a href="/#products">Products</a>
+        <span aria-hidden="true">/</span>
+        <span>{entry.eyebrow.split('/')[1]?.trim()}</span>
+        <span aria-hidden="true">/</span>
+        <span>{entry.eyebrow.split('/')[2]?.trim()}</span>
+      </p>
+
+      <div class="product-head__grid">
+        <div class="product-head__identity">
+          <span class="product-head__sigil">
+            <Sigil slug={entry.slug} size={104} weight={7} title={`${entry.title} mark`} />
+          </span>
+          <div>
+            <h1 class="product-head__title">{entry.title}</h1>
+            <p class="product-head__category">{product.category}</p>
+          </div>
+        </div>
+
+        <p class="product-head__lede">{product.oneliner}</p>
+      </div>
+    </div>
+  </header>
+
+  <figure class="product-figure">
+    <div class="shell">
+      <div class="product-figure__frame">
+        <ProductFigure slug={entry.slug} />
+      </div>
+      <figcaption class="product-figure__caption">
+        <span>{entry.caption}</span>
+        <span class="product-figure__status">{product.status}</span>
+      </figcaption>
+    </div>
+  </figure>
+
+  <section class="product-body">
+    <div class="shell product-body__grid">
+      <article class="product-body__main">
+        <div class="product-intro">
+          {entry.intro.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+
+        {
+          entry.sections.map((section) => (
+            <section class="product-section">
+              <h2 class="product-section__title">{section.title}</h2>
+              {section.blocks.map((block) => {
+                if (block.kind === 'p') {
+                  return <p class="product-section__p">{block.text}</p>;
+                }
+                if (block.kind === 'note') {
+                  return <aside class="product-note">{block.text}</aside>;
+                }
+                return (
+                  <dl class="product-list">
+                    {block.items.map((item, i) => (
+                      <div class="product-list__row">
+                        <dt>
+                          <span class="product-list__index">{String(i + 1).padStart(2, '0')}</span>
+                          {item.title}
+                        </dt>
+                        <dd>{item.text}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                );
+              })}
+            </section>
+          ))
+        }
+      </article>
+
+      <aside class="product-aside">
+        <dl>
+          {
+            entry.aside.map((item) => (
+              <div>
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a class="link-arrow product-aside__link" href="/#operators">
+          Operator Paradigm
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" />
+          </svg>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="related" aria-labelledby="related-title">
+    <div class="shell">
+      <div class="related__head">
+        <h2 class="label" id="related-title">Other products</h2>
+        <a class="link-arrow" href="/#products">All products</a>
+      </div>
+      <ul class="related__grid" role="list">
+        {
+          related.map((item) => (
+            <li>
+              <a href={item.href} class="related__item">
+                <span class="related__sigil">
+                  <Sigil slug={item.slug} size={30} weight={9} />
+                </span>
+                <span class="related__name">{item.name}</span>
+                <span class="related__category">{item.category}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .product-head {
+    padding-block: clamp(2rem, 4vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .product-head__eyebrow {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .product-head__eyebrow a {
+    border-bottom: 1px solid transparent;
+  }
+
+  .product-head__eyebrow a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--rule-strong);
+  }
+
+  .product-head__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.5rem;
+    align-items: end;
+  }
+
+  .product-head__identity {
+    grid-column: 1 / span 8;
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  }
+
+  .product-head__sigil {
+    color: var(--terracotta);
+    padding-bottom: 0.4rem;
+  }
+
+  .product-head__title {
+    font-size: clamp(3rem, 1rem + 7vw, 7rem);
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.055em;
+  }
+
+  .product-head__category {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-top: 0.85rem;
+  }
+
+  .product-head__lede {
+    grid-column: 9 / -1;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    padding-bottom: 0.5rem;
+  }
+
+  /* ---- Figure ---------------------------------------------------------- */
+  .product-figure {
+    padding-block: clamp(1rem, 2vw, 2rem) clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .product-figure__frame {
+    border: var(--hairline);
+    background: var(--ivory-raised);
+    padding: clamp(1rem, 3vw, 3rem);
+  }
+
+  .product-figure__caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border-bottom: var(--hairline);
+    padding-block: 0.75rem;
+  }
+
+  .product-figure__status {
+    color: var(--terracotta-deep);
+  }
+
+  /* ---- Body ------------------------------------------------------------ */
+  .product-body {
+    padding-block: clamp(3rem, 5vw, 5rem);
+    border-bottom: var(--hairline);
+  }
+
+  .product-body__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 3vw, 4rem);
+    row-gap: 3rem;
+    align-items: start;
+  }
+
+  .product-body__main {
+    grid-column: 1 / span 8;
+  }
+
+  .product-intro {
+    max-width: 62ch;
+    display: grid;
+    gap: 1.15rem;
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    line-height: 1.62;
+    color: var(--ink);
+    padding-bottom: clamp(2rem, 3vw, 2.75rem);
+    border-bottom: var(--hairline);
+  }
+
+  .product-section {
+    padding-top: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .product-section__title {
+    font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+  }
+
+  .product-section__p {
+    max-width: 62ch;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .product-section__p + .product-section__p {
+    margin-top: 1em;
+  }
+
+  .product-note {
+    max-width: 62ch;
+    border-left: 2px solid var(--terracotta);
+    background: var(--terracotta-wash);
+    padding: 1rem 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .product-list {
+    margin: 0;
+    border-top: var(--hairline);
+  }
+
+  .product-list__row {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.75fr) minmax(0, 1.4fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-block: 1.1rem;
+    border-bottom: var(--hairline);
+  }
+
+  .product-list dt {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+
+  .product-list__index {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    color: var(--terracotta);
+    letter-spacing: 0.08em;
+  }
+
+  .product-list dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Aside ----------------------------------------------------------- */
+  .product-aside {
+    grid-column: 9 / -1;
+    position: sticky;
+    top: 6rem;
+    border-top: var(--hairline-strong);
+    padding-top: 1rem;
+  }
+
+  .product-aside dl {
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .product-aside dl > div {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .product-aside dt {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .product-aside dd {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .product-aside__link {
+    margin-top: 1.75rem;
+  }
+
+  /* ---- Related --------------------------------------------------------- */
+  .related {
+    padding-block: clamp(2.5rem, 4vw, 3.5rem) clamp(3.5rem, 6vw, 5rem);
+  }
+
+  .related__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    border-bottom: var(--hairline);
+    padding-bottom: 0.9rem;
+  }
+
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .related__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.8rem;
+    row-gap: 0.2rem;
+    align-items: center;
+    padding: 1.4rem 1.5rem 1.5rem 0;
+    transition: background-color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .related__item:hover {
+    background: var(--ivory-raised);
+  }
+
+  .related__sigil {
+    grid-row: 1 / span 2;
+    color: var(--ink);
+  }
+
+  .related__item:hover .related__sigil {
+    color: var(--terracotta);
+  }
+
+  .related__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .related__category {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  @media (max-width: 980px) {
+    .product-head__identity,
+    .product-head__lede {
+      grid-column: 1 / -1;
+    }
+    .product-head__lede {
+      max-width: 52ch;
+    }
+    .product-body__main {
+      grid-column: 1 / -1;
+    }
+    .product-aside {
+      grid-column: 1 / -1;
+      position: static;
+      max-width: 34rem;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .product-figure__frame {
+      padding: 1rem;
+    }
+    .product-list__row {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+    .related__grid {
+      grid-template-columns: 1fr;
+    }
+    .related__item {
+      border-bottom: var(--hairline);
+      padding-right: 0;
+    }
+  }
+</style>
