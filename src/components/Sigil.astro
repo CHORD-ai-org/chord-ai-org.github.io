@@ -1,0 +1,52 @@
+---
+/**
+ * Sigil — the four CHORD product marks, drawn as construction geometry
+ * rather than typeset characters. Uniform 100x100 grid, uniform stroke weight,
+ * butt caps, square joins: one drawing system, four glyphs.
+ */
+export interface Props {
+  slug: 'thylas' | 'wam' | 'rym' | 'knock';
+  size?: number;
+  weight?: number;
+  title?: string;
+}
+
+const { slug, size = 40, weight = 9, title } = Astro.props;
+
+const paths: Record<string, string> = {
+  // τ — bar, stem, and a short foot turned to the right
+  thylas: 'M26 31 H74 M50 31 V74 M50 74 H64',
+  // ω — two bowls meeting at a notch above the baseline
+  wam: 'M20 34 C20 60 27 76 39 76 C47 76 50 68 50 58 C50 68 53 76 61 76 C73 76 80 60 80 34',
+  // γ — a shallow fork with the left leg descending below the join
+  rym: 'M29 27 L51 61 L71 27 M51 61 C51 74 45 83 34 86',
+  // κ — stem plus two diagonals meeting at its midpoint
+  knock: 'M35 26 V83 M72 27 L40 56 L73 83',
+};
+---
+
+<svg
+  class="sigil"
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  fill="none"
+  stroke="currentColor"
+  stroke-width={weight}
+  stroke-linecap="butt"
+  stroke-linejoin="miter"
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  aria-label={title}
+>
+  {title && <title>{title}</title>}
+  <path d={paths[slug]} />
+</svg>
+
+<style>
+  .sigil {
+    display: block;
+    flex: none;
+    overflow: visible;
+  }
+</style>
