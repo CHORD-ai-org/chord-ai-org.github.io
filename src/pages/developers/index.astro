@@ -1,0 +1,166 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SplitSection from '../../components/SplitSection.astro';
+import { site } from '../../data/site';
+
+const channels = [
+  {
+    label: 'GitHub Organization',
+    detail: 'Repositories, issues, and the public record of what is being built.',
+    href: site.github,
+    meta: 'External',
+    external: true,
+  },
+  {
+    label: 'Knock',
+    detail: 'Developer forum and community. In development — not open yet.',
+    href: '/products/knock',
+    meta: 'In development',
+    external: false,
+  },
+  {
+    label: 'Documentation',
+    detail: 'Not published. This page will say so until there is something real to read.',
+    href: '/developers/documentation',
+    meta: 'In preparation',
+    external: false,
+  },
+  {
+    label: 'Research',
+    detail: 'The questions the engineering is being built against.',
+    href: '/research',
+    meta: 'On this site',
+    external: false,
+  },
+];
+---
+
+<Base
+  title="Developers"
+  description="Where CHORD’s work is public: the GitHub organization, the Knock community, and documentation as it becomes available."
+>
+  <PageHeader
+    eyebrow="Developers / 01"
+    title="Developers"
+    lede="Where the work is public, and where it is not yet. We would rather list three real entry points than eight that lead nowhere."
+  />
+
+  <div class="shell">
+    <ul class="channels" role="list">
+      {
+        channels.map((channel) => (
+          <li>
+            <a
+              class="channel"
+              href={channel.href}
+              target={channel.external ? '_blank' : undefined}
+              rel={channel.external ? 'noopener' : undefined}
+            >
+              <span class="channel__label">{channel.label}</span>
+              <span class="channel__detail">{channel.detail}</span>
+              <span class="channel__meta">{channel.meta}</span>
+              <span class="channel__arrow" aria-hidden="true">
+                {channel.external ? '↗' : '→'}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <SplitSection label="Today" title="What is actually public">
+      <p>
+        The organization’s repositories are on GitHub, along with their issues. That is the
+        public record: what exists, what is being argued about, and what is still missing.
+        Repositories carry their own licenses and their own contribution guidance.
+      </p>
+      <p>
+        This website is a static site built with Astro and deployed to GitHub Pages. Its
+        repository is <a class="text-link" href={site.githubRepo} target="_blank" rel="noopener">public</a>
+        and licensed GPL-3.0.
+      </p>
+    </SplitSection>
+
+    <SplitSection label="Practice" title="Before opening a pull request">
+      <p>
+        Read the repository’s own guidance first. Where a repository has none, open an issue
+        describing what you intend to change and why — a short issue costs less than a large
+        pull request that has to be redirected.
+      </p>
+      <p>
+        For questions about the framework, the platform, or research directions, the
+        <a class="text-link" href="/contact">contact page</a> lists the channels that
+        currently reach us.
+      </p>
+    </SplitSection>
+  </div>
+</Base>
+
+<style>
+  .channels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--hairline-strong);
+  }
+
+  .channels li {
+    border-bottom: var(--hairline);
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.85fr) minmax(0, 1.7fr) 8rem 1.5rem;
+    gap: clamp(1rem, 2.4vw, 2.5rem);
+    align-items: baseline;
+    padding-block: 1.35rem;
+    transition: background-color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .channel:hover {
+    background: var(--ivory-raised);
+  }
+
+  .channel__label {
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .channel__detail {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .channel__meta {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .channel__arrow {
+    justify-self: end;
+    color: var(--terracotta);
+  }
+
+  @media (max-width: 900px) {
+    .channel {
+      grid-template-columns: minmax(0, 1fr) 1.5rem;
+      row-gap: 0.4rem;
+    }
+    .channel__detail {
+      grid-column: 1 / -1;
+    }
+    .channel__meta {
+      display: none;
+    }
+    .channel__arrow {
+      grid-row: 1;
+      grid-column: 2;
+    }
+  }
+</style>
