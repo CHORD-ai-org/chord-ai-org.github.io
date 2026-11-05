@@ -1,0 +1,353 @@
+---
+import Wordmark from './Wordmark.astro';
+import Sigil from './Sigil.astro';
+import { navigation, products } from '../data/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href.replace('/#products', ''));
+---
+
+<header class="site-head">
+  <div class="site-head__bar shell">
+    <a class="site-head__brand" href="/" aria-label="CHORD — home">
+      <Wordmark size="1.15rem" />
+      <span class="site-head__descriptor">AI Infrastructure</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" role="list">
+        {
+          navigation.map((item) => (
+            <li class:list={['site-nav__item', { 'has-panel': !!item.children }]}>
+              <a
+                class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+              {item.children && (
+                <div class="nav-panel">
+                  <ul role="list">
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          target={child.href.startsWith('http') ? '_blank' : undefined}
+                          rel={child.href.startsWith('http') ? 'noopener' : undefined}
+                        >
+                          <span class="nav-panel__label">{child.label}</span>
+                          {child.meta && <span class="nav-panel__meta">{child.meta}</span>}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-menu-toggle
+    >
+      <span class="menu-toggle__line"></span>
+      <span class="menu-toggle__line"></span>
+      <span class="sr-only">Menu</span>
+    </button>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <div class="mobile-nav__inner shell">
+      <p class="label">Products</p>
+      <ul class="mobile-nav__products" role="list">
+        {
+          products.map((p) => (
+            <li>
+              <a href={p.href}>
+                <span class="mobile-nav__sigil">
+                  <Sigil slug={p.slug} size={22} weight={10} />
+                </span>
+                <span class="mobile-nav__name">{p.name}</span>
+                <span class="mobile-nav__meta">{p.category}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <hr class="rule" />
+      <ul class="mobile-nav__links" role="list">
+        <li><a href="/research">Research</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/vision">Vision</a></li>
+        <li><a href="/developers">Developers</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="https://github.com/CHORD-ai-org" target="_blank" rel="noopener">GitHub ↗</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.getElementById('mobile-nav');
+
+  const setOpen = (open: boolean) => {
+    if (!toggle || !panel) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    panel.hidden = !open;
+    document.documentElement.classList.toggle('nav-open', open);
+  };
+
+  toggle?.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  panel?.querySelectorAll('a').forEach((link) =>
+    link.addEventListener('click', () => setOpen(false))
+  );
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setOpen(false);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 980) setOpen(false);
+  });
+</script>
+
+<style>
+  .site-head {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ivory);
+    border-bottom: var(--hairline);
+  }
+
+  .site-head__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    height: 4.25rem;
+  }
+
+  .site-head__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-block: 0.4rem;
+  }
+
+  .site-head__descriptor {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--taupe);
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--rule);
+    line-height: 1.2;
+    max-width: 6rem;
+  }
+
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.2vw, 2.25rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav__item {
+    position: relative;
+  }
+
+  .site-nav__link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding-block: 1.5rem;
+    border-bottom: 1px solid transparent;
+    transition: color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .site-nav__link:hover,
+  .site-nav__link.is-active {
+    color: var(--terracotta);
+  }
+
+  .site-nav__link.is-active {
+    border-bottom-color: var(--terracotta);
+  }
+
+  /* Desktop dropdown: opens on hover and on keyboard focus */
+  .nav-panel {
+    position: absolute;
+    top: 100%;
+    left: -1.25rem;
+    min-width: 17rem;
+    background: var(--ivory);
+    border: var(--hairline-strong);
+    border-top: 0;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--dur-fast) var(--ease-mechanical),
+      transform var(--dur-fast) var(--ease-mechanical),
+      visibility var(--dur-fast);
+  }
+
+  .site-nav__item:hover .nav-panel,
+  .site-nav__item:focus-within .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-panel a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.6rem 1.25rem;
+    transition: background-color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .nav-panel a:hover {
+    background: var(--ivory-raised);
+  }
+
+  .nav-panel__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-panel__meta {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    white-space: nowrap;
+  }
+
+  /* Mobile toggle */
+  .menu-toggle {
+    display: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--rule-strong);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    place-items: center;
+    gap: 5px;
+  }
+
+  .menu-toggle__line {
+    display: block;
+    width: 1rem;
+    height: 1px;
+    background: var(--ink);
+    transition: transform var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .menu-toggle[aria-expanded='true'] .menu-toggle__line:first-child {
+    transform: translateY(3px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded='true'] .menu-toggle__line:nth-child(2) {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    border-top: var(--hairline);
+    background: var(--ivory);
+    max-height: calc(100dvh - 4.25rem);
+    overflow-y: auto;
+  }
+
+  .mobile-nav__inner {
+    padding-block: 1.75rem 2.5rem;
+  }
+
+  .mobile-nav__products {
+    list-style: none;
+    margin: 0.75rem 0 1.5rem;
+    padding: 0;
+    border-top: var(--hairline);
+  }
+
+  .mobile-nav__products a {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.85rem;
+    border-bottom: var(--hairline);
+  }
+
+  .mobile-nav__sigil {
+    color: var(--terracotta);
+  }
+
+  .mobile-nav__name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .mobile-nav__meta {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .mobile-nav__links {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 980px) {
+    .site-nav {
+      display: none;
+    }
+    .menu-toggle {
+      display: grid;
+    }
+    .site-head__descriptor {
+      display: none;
+    }
+  }
+</style>
