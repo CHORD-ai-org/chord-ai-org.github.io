@@ -145,8 +145,10 @@ const developerEntries = [
 
       <div class="statement" data-reveal>
         <p class="statement__text">
-          From agents to operators.<br />
-          From operators to infrastructure.
+          <span>From agents</span>
+          <span>to operators.</span>
+          <span>From operators</span>
+          <span>to infrastructure.</span>
         </p>
         <p class="statement__meta">
           <span class="label">Working direction</span>
@@ -396,6 +398,10 @@ const developerEntries = [
     letter-spacing: -0.045em;
   }
 
+  .statement__text span {
+    display: block;
+  }
+
   .statement__meta {
     display: flex;
     flex-direction: column;
@@ -448,15 +454,25 @@ const developerEntries = [
 
   .capability__status {
     justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     font-family: var(--font-mono);
     font-size: 0.5625rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--terracotta-deep);
-    border: 1px solid rgba(181, 111, 80, 0.45);
-    background: var(--terracotta-wash);
-    padding: 0.35rem 0.55rem;
+    color: var(--ink);
+    border: 1px solid var(--rule-strong);
+    padding: 0.4rem 0.55rem;
     white-space: nowrap;
+  }
+
+  .capability__status::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    background: var(--terracotta);
+    flex: none;
   }
 
   .capabilities__note {
