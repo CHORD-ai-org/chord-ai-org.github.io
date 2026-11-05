@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SplitSection from '../components/SplitSection.astro';
+import { site } from '../data/site';
+
+const include = [
+  {
+    index: '01',
+    label: 'What you are trying to do',
+    detail: 'The task or the problem, in concrete terms — not the category it belongs to.',
+  },
+  {
+    index: '02',
+    label: 'What you have already tried',
+    detail: 'Frameworks, models, or approaches you ruled out, and why. It saves a round trip.',
+  },
+  {
+    index: '03',
+    label: 'What a good outcome looks like',
+    detail: 'A working prototype, a research collaboration, a platform evaluation — these lead to different answers.',
+  },
+];
+---
+
+<Base
+  title="Contact"
+  description="How to reach CHORD: the GitHub organization and, when it opens, the Knock developer community."
+>
+  <PageHeader
+    eyebrow="Contact / 01"
+    title="Contact"
+    lede="The channels that reach CHORD today. A direct address is not published yet, and we would rather say that than list a mailbox nobody reads."
+  />
+
+  <div class="shell">
+    <div class="contact-grid">
+      <a class="contact-card" href={site.github} target="_blank" rel="noopener">
+        <span class="contact-card__label label">Primary channel</span>
+        <span class="contact-card__title">GitHub Organization ↗</span>
+        <span class="contact-card__detail">
+          Open an issue in the relevant repository. If the topic does not belong to a
+          repository yet, use the organization’s public discussion surface.
+        </span>
+      </a>
+
+      <div class="contact-card contact-card--muted">
+        <span class="contact-card__label label">When it opens</span>
+        <span class="contact-card__title">Knock</span>
+        <span class="contact-card__detail">
+          The developer forum will be the place for open-ended discussion. It is in
+          development and takes no members yet.
+        </span>
+        <a class="link-arrow" href="/products/knock">About Knock</a>
+      </div>
+    </div>
+
+    <SplitSection label="Requests" title="What to put in a first message">
+      <ul class="include" role="list">
+        {
+          include.map((item) => (
+            <li class="include__row">
+              <span class="include__index">{item.index}</span>
+              <div>
+                <h3 class="include__label">{item.label}</h3>
+                <p class="include__detail">{item.detail}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </SplitSection>
+
+    <SplitSection label="Enterprise" title="Platform, research, and collaboration">
+      <p>
+        Inquiries about Thylas access, Rym research collaboration, or building on WAM should
+        go through the GitHub organization for now, with enough context to route them
+        correctly. A dedicated commercial contact will be published here when it exists.
+      </p>
+      <p>
+        We do not publish response-time commitments on this site. What we can say is that a
+        specific message with context is far more likely to get an answer than a general
+        enquiry.
+      </p>
+    </SplitSection>
+  </div>
+</Base>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: var(--hairline-strong);
+    border-left: var(--hairline);
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+    border-right: var(--hairline);
+    border-bottom: var(--hairline);
+    transition: background-color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  a.contact-card:hover {
+    background: var(--ivory-raised);
+  }
+
+  .contact-card__title {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .contact-card__detail {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 40ch;
+  }
+
+  .contact-card--muted .contact-card__title {
+    color: var(--ink-soft);
+  }
+
+  .contact-card .link-arrow {
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+
+  .include {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .include__row {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding-bottom: 1.15rem;
+    border-bottom: var(--hairline);
+  }
+
+  .include__row:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .include__index {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    color: var(--terracotta);
+    padding-top: 0.35rem;
+  }
+
+  .include__label {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.25rem;
+  }
+
+  .include__detail {
+    font-size: 0.9063rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 48ch;
+  }
+
+  @media (max-width: 760px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
