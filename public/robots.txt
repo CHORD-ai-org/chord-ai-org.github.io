@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chord-ai-org.github.io/sitemap.xml
