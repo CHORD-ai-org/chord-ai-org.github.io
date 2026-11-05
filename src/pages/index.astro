@@ -1,0 +1,702 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProductRow from '../components/ProductRow.astro';
+import Architecture from '../components/Architecture.astro';
+import OperatorStage from '../components/OperatorStage.astro';
+import { products, researchAreas, site } from '../data/site';
+
+const commitments = [
+  {
+    index: '01',
+    title: 'Expand Capabilities',
+    body: 'The ceiling of a single agent matters less than the floor of what it can be trusted with. We work on the tasks agents currently fail at, then on the next set after that.',
+  },
+  {
+    index: '02',
+    title: 'Discover Operators',
+    body: 'When something works once, we look for the structure inside it — the parts that can be named, bounded, checked, and run again. That extraction is the research.',
+  },
+  {
+    index: '03',
+    title: 'Build Infrastructure',
+    body: 'A capability that exists in one experiment is a demonstration. Infrastructure is what makes it repeatable, measurable, and available to someone who was not in the room.',
+  },
+];
+
+const capabilities = [
+  {
+    index: 'C/01',
+    title: 'Autonomous Research',
+    body: 'Agents that read a field, form a question worth answering, design and run experiments, and write the result up as a paper. The hard part is not the writing. It is knowing what has already been done, and knowing when a result is not good enough.',
+    status: 'Research program',
+  },
+  {
+    index: 'C/02',
+    title: 'Collaborative Development',
+    body: 'A person and an agent working on the same product across weeks, where the agent holds the state of the work rather than a summary of the last message. The target is work that neither party could ship alone.',
+    status: 'Research program',
+  },
+  {
+    index: 'C/03',
+    title: 'Competitive Problem Solving',
+    body: 'Kaggle-style environments as a measurement surface: a fixed problem, a public leaderboard, no partial credit for a plausible-sounding answer. This includes the unglamorous parts — validation splits, leakage, overfitting.',
+    status: 'Experimental',
+  },
+  {
+    index: 'C/04',
+    title: 'Computational Operations',
+    body: 'Long-horizon work that spans tools and domains: data pipelines, simulation, verification loops. The question we care about is which parts of that work are genuinely computational and can be made exact.',
+    status: 'Research direction',
+  },
+];
+
+const stages = [
+  {
+    stage: 1 as const,
+    index: 'Stage 01',
+    title: 'Discover',
+    body: 'Observe a complex operation succeed inside a real trajectory. Record what actually happened, not what the plan said would happen.',
+  },
+  {
+    stage: 2 as const,
+    index: 'Stage 02',
+    title: 'Abstract',
+    body: 'Separate the invariant structure from the incidental detail. Give the operation a boundary, inputs, and a condition under which it is wrong.',
+  },
+  {
+    stage: 3 as const,
+    index: 'Stage 03',
+    title: 'Compose',
+    body: 'Chain extracted operators into larger ones. Composition is where accumulated work starts to compound instead of restarting.',
+  },
+  {
+    stage: 4 as const,
+    index: 'Stage 04',
+    title: 'Generalize',
+    body: 'The same operator, applied to a problem it was not extracted from. If it does not transfer, it was a transcript rather than an operator.',
+  },
+];
+
+const developerEntries = [
+  {
+    label: 'GitHub Organization',
+    detail: 'Source, issues, and the public record of what we build.',
+    href: site.github,
+    meta: 'External',
+    external: true,
+  },
+  {
+    label: 'Open Source Projects',
+    detail: 'Repositories published by the organization. Count and scope change as work is released.',
+    href: site.github,
+    meta: 'External',
+    external: true,
+  },
+  {
+    label: 'Knock',
+    detail: 'Developer forum and community, built around LemmaX integration. In development.',
+    href: '/products/knock',
+    meta: 'In development',
+    external: false,
+  },
+  {
+    label: 'LemmaX Integration',
+    detail: 'The surface Knock is built on. Described on the Knock page rather than documented here in advance.',
+    href: '/products/knock',
+    meta: 'See Knock',
+    external: false,
+  },
+  {
+    label: 'Documentation',
+    detail: 'Not published yet. This page will say so until there is something real to read.',
+    href: '/developers/documentation',
+    meta: 'In preparation',
+    external: false,
+  },
+];
+---
+
+<Base>
+  <Hero />
+
+  <!-- 02 — Vision -->
+  <section class="section" aria-labelledby="vision-title">
+    <div class="shell">
+      <SectionHead
+        index="02"
+        title="Why CHORD exists"
+        note="Three commitments, in the order they have to happen. Each one depends on the one above it."
+        id="vision-title"
+      />
+
+      <div class="commitments">
+        {
+          commitments.map((item, i) => (
+            <article class="commitment" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              <span class="commitment__index">{item.index}</span>
+              <h3 class="commitment__title">{item.title}</h3>
+              <p class="commitment__body">{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="statement" data-reveal>
+        <p class="statement__text">
+          From agents to operators.<br />
+          From operators to infrastructure.
+        </p>
+        <p class="statement__meta">
+          <span class="label">Working direction</span>
+          <span class="mono-note"
+            >Not a finished slogan. It is the order in which the work has to be done.</span
+          >
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — Architecture -->
+  <section class="section" aria-labelledby="architecture-title">
+    <div class="shell">
+      <SectionHead
+        index="03"
+        title="One stack, four layers"
+        note="Model, orchestration, platform, ecosystem. Drawn bottom-up because that is the direction dependency runs."
+        id="architecture-title"
+      />
+      <Architecture />
+    </div>
+  </section>
+
+  <!-- 04 — Products -->
+  <section class="section" aria-labelledby="products-title" id="products">
+    <div class="shell">
+      <SectionHead
+        index="04"
+        title="Products"
+        note="Four products, four marks. Each has its own page, because each is a different answer to the same question."
+        id="products-title"
+      />
+      <ul class="product-list" role="list">
+        {products.map((product, i) => <ProductRow product={product} index={i} />)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 05 — Capabilities -->
+  <section class="section" aria-labelledby="capabilities-title">
+    <div class="shell">
+      <SectionHead
+        index="05"
+        title="The work we are built for"
+        note="Four kinds of complex work. These are objectives and experiments — not shipped features, and not case studies."
+        id="capabilities-title"
+      />
+
+      <ol class="capabilities" role="list">
+        {
+          capabilities.map((cap, i) => (
+            <li class="capability" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <span class="capability__index">{cap.index}</span>
+              <h3 class="capability__title">{cap.title}</h3>
+              <p class="capability__body">{cap.body}</p>
+              <span class="capability__status">{cap.status}</span>
+            </li>
+          ))
+        }
+      </ol>
+
+      <p class="capabilities__note mono-note">
+        Status labels are honest by design. Nothing on this page describes a customer
+        deployment, a benchmark result, or a completed outcome.
+      </p>
+    </div>
+  </section>
+
+  <!-- 06 — Operator Paradigm -->
+  <section class="section section--invert" id="operators" aria-labelledby="operators-title">
+    <div class="shell">
+      <SectionHead
+        index="06"
+        title="The Operator Paradigm"
+        note="A working concept inside CHORD, not a formal definition and not a finished system."
+        id="operators-title"
+      />
+
+      <div class="operators__intro">
+        <p class="headline">
+          Most agent work is spent rediscovering the same operation from&nbsp;scratch.
+        </p>
+        <p class="lede">
+          A successful trajectory contains structure: a step that can be named, bounded,
+          and checked. If that structure can be extracted reliably, it can be accumulated
+          and composed instead of regenerated. That is the whole thesis.
+        </p>
+      </div>
+
+      <div class="stages">
+        {
+          stages.map((stage) => (
+            <OperatorStage {...stage} />
+          ))
+        }
+      </div>
+
+      <div class="operators__status">
+        <p class="label">Where this stands</p>
+        <p class="mono-note">
+          The four stages above describe an ongoing technical direction. We do not
+          publish a formal mathematical definition of an Operator, and we are not
+          claiming a general operator library exists today.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 — Research -->
+  <section class="section" aria-labelledby="research-title">
+    <div class="shell">
+      <SectionHead
+        index="07"
+        title="Research & exploration"
+        note="Questions we are actively working on. Publications appear when there is something worth publishing."
+        id="research-title"
+      />
+
+      <div class="research-grid">
+        {
+          researchAreas.map((area, i) => (
+            <article class="research-card" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <span class="research-card__index">{area.index}</span>
+              <h3 class="research-card__title">{area.title}</h3>
+              <p class="research-card__question">{area.question}</p>
+              <p class="research-card__detail">{area.detail}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="research-foot">
+        <a class="link-arrow" href="/research">
+          Research overview
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" />
+          </svg>
+        </a>
+        <a class="link-arrow" href="/research/publications">
+          Publications
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 — Developers -->
+  <section class="section" aria-labelledby="developers-title">
+    <div class="shell">
+      <SectionHead
+        index="08"
+        title="Developers"
+        note="Where the work is public, and where it is not yet."
+        id="developers-title"
+      />
+
+      <ul class="dev-list" role="list">
+        {
+          developerEntries.map((entry) => (
+            <li>
+              <a
+                class="dev-row"
+                href={entry.href}
+                target={entry.external ? '_blank' : undefined}
+                rel={entry.external ? 'noopener' : undefined}
+              >
+                <span class="dev-row__label">{entry.label}</span>
+                <span class="dev-row__detail">{entry.detail}</span>
+                <span class="dev-row__meta">{entry.meta}</span>
+                <span class="dev-row__arrow" aria-hidden="true">
+                  {entry.external ? '↗' : '→'}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="dev-note mono-note">
+        External links are marked. Where a destination does not exist yet, this page
+        says so rather than linking somewhere empty.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---- Vision ---------------------------------------------------------- */
+  .commitments {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: var(--hairline-strong);
+  }
+
+  .commitment {
+    padding: clamp(1.5rem, 2.6vw, 2.5rem) clamp(1rem, 2vw, 2rem) clamp(2rem, 3vw, 3rem) 0;
+    border-right: var(--hairline);
+  }
+
+  .commitment:last-child {
+    border-right: 0;
+  }
+
+  .commitment__index {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--terracotta);
+    letter-spacing: 0.1em;
+    margin-bottom: 2.5rem;
+  }
+
+  .commitment__title {
+    font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.125rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    margin-bottom: 1rem;
+    max-width: 12ch;
+  }
+
+  .commitment__body {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 34ch;
+  }
+
+  .statement {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    align-items: end;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    margin-top: clamp(3rem, 6vw, 5.5rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: var(--hairline);
+  }
+
+  .statement__text {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 1rem + 3.4vw, 4rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .statement__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .statement__meta .mono-note {
+    max-width: 32ch;
+  }
+
+  /* ---- Capabilities ---------------------------------------------------- */
+  .capabilities {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--hairline-strong);
+  }
+
+  .capability {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(10rem, 0.85fr) minmax(0, 1.7fr) 9rem;
+    gap: clamp(1rem, 2.4vw, 2.5rem);
+    align-items: start;
+    padding-block: clamp(1.75rem, 3.2vw, 2.75rem);
+    border-bottom: var(--hairline);
+  }
+
+  .capability__index {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    color: var(--taupe);
+    padding-top: 0.4rem;
+  }
+
+  .capability__title {
+    font-size: clamp(1.35rem, 1.05rem + 1vw, 1.875rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .capability__body {
+    font-size: 0.9375rem;
+    line-height: 1.68;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+
+  .capability__status {
+    justify-self: start;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    border: 1px solid rgba(181, 111, 80, 0.45);
+    background: var(--terracotta-wash);
+    padding: 0.35rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  .capabilities__note {
+    margin-top: 1.5rem;
+    max-width: 58ch;
+  }
+
+  /* ---- Operators ------------------------------------------------------- */
+  .operators__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(1.5rem, 4vw, 4.5rem);
+    align-items: end;
+    padding-bottom: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  .operators__intro .headline {
+    max-width: 18ch;
+  }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.2vw, 2.5rem);
+    border-top: 1px solid var(--rule-inverse);
+    padding-top: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .operators__status {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 6fr);
+    gap: 2rem;
+    margin-top: clamp(2.5rem, 4vw, 3.5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule-inverse);
+  }
+
+  /* ---- Research -------------------------------------------------------- */
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: var(--hairline-strong);
+    border-left: var(--hairline);
+  }
+
+  .research-card {
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    border-right: var(--hairline);
+    border-bottom: var(--hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 15rem;
+    transition: background-color var(--dur-base) var(--ease-mechanical);
+  }
+
+  .research-card:hover {
+    background: var(--ivory-raised);
+  }
+
+  .research-card__index {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    color: var(--terracotta);
+  }
+
+  .research-card__title {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .research-card__question {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--ink);
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .research-card__detail {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--taupe);
+    margin-top: auto;
+  }
+
+  .research-foot {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  /* ---- Developers ------------------------------------------------------ */
+  .dev-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--hairline-strong);
+  }
+
+  .dev-row {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.8fr) minmax(0, 1.6fr) 8rem 1.5rem;
+    gap: clamp(1rem, 2.4vw, 2.5rem);
+    align-items: baseline;
+    padding-block: 1.15rem;
+    border-bottom: var(--hairline);
+    transition: background-color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .dev-row:hover {
+    background: var(--ivory-raised);
+  }
+
+  .dev-row__label {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .dev-row__detail {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .dev-row__meta {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .dev-row__arrow {
+    justify-self: end;
+    color: var(--terracotta);
+  }
+
+  .dev-note {
+    margin-top: 1.5rem;
+    max-width: 56ch;
+  }
+
+  /* ---- Responsive ------------------------------------------------------ */
+  @media (max-width: 1080px) {
+    .commitments {
+      grid-template-columns: 1fr;
+    }
+    .commitment {
+      border-right: 0;
+      border-bottom: var(--hairline);
+      padding-right: 0;
+    }
+    .commitment__index {
+      margin-bottom: 1.25rem;
+    }
+    .commitment__title {
+      max-width: none;
+    }
+    .statement {
+      grid-template-columns: 1fr;
+    }
+    .capability {
+      grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+      grid-template-areas:
+        'index title status'
+        '. body body';
+    }
+    .capability__index {
+      grid-area: index;
+    }
+    .capability__title {
+      grid-area: title;
+    }
+    .capability__body {
+      grid-area: body;
+    }
+    .capability__status {
+      grid-area: status;
+    }
+    .operators__intro {
+      grid-template-columns: 1fr;
+    }
+    .stages {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2.5rem;
+    }
+    .research-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .dev-row {
+      grid-template-columns: minmax(8rem, 0.7fr) minmax(0, 1.5fr) 1.5rem;
+    }
+    .dev-row__meta {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .capability {
+      grid-template-columns: 3rem minmax(0, 1fr);
+      grid-template-areas:
+        'index title'
+        'body body'
+        'status status';
+      row-gap: 0.75rem;
+    }
+    .capability__status {
+      justify-self: start;
+      margin-top: 0.25rem;
+    }
+    .stages {
+      grid-template-columns: 1fr;
+    }
+    .research-grid {
+      grid-template-columns: 1fr;
+      border-left: 0;
+    }
+    .research-card {
+      border-right: 0;
+      min-height: 0;
+    }
+    .operators__status {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .dev-row {
+      grid-template-columns: minmax(0, 1fr) 1.25rem;
+      row-gap: 0.35rem;
+    }
+    .dev-row__detail {
+      grid-column: 1 / -1;
+    }
+    .dev-row__arrow {
+      grid-row: 1;
+      grid-column: 2;
+    }
+  }
+</style>
