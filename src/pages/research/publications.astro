@@ -1,0 +1,153 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+
+const expected = [
+  {
+    label: 'Title',
+    detail: 'The claim the paper actually makes, not the topic it belongs to.',
+  },
+  {
+    label: 'Status',
+    detail: 'Preprint, workshop paper, or peer-reviewed. Stated plainly, with a venue when there is one.',
+  },
+  {
+    label: 'Date',
+    detail: 'First public date. Revisions are noted rather than quietly applied.',
+  },
+  {
+    label: 'Artifact',
+    detail: 'Code, data, or evaluation harness, when the result depends on it.',
+  },
+];
+---
+
+<Base
+  title="Publications"
+  description="CHORD’s publication index. Nothing has been published yet; this page records the policy for what will appear here."
+>
+  <PageHeader
+    eyebrow="Research / 02"
+    title="Publications"
+    lede="Nothing has been published yet. This page exists so that when there is something to publish, it has a place to live."
+  />
+
+  <div class="shell">
+    <div class="empty">
+      <p class="empty__statement">No publications.</p>
+      <div class="empty__body">
+        <p>
+          CHORD has not published any papers, preprints, or technical reports. We are not
+          going to fill this page with plausible-looking entries to make the research
+          program look established.
+        </p>
+        <p>
+          When a result survives internal review — and, where possible, reproduction by
+          someone who is not the author — it will be listed here with an honest status.
+        </p>
+      </div>
+    </div>
+
+    <section class="schema" aria-labelledby="schema-title">
+      <h2 class="label" id="schema-title">What each entry will contain</h2>
+      <dl class="schema__list">
+        {
+          expected.map((item) => (
+            <div class="schema__row">
+              <dt>{item.label}</dt>
+              <dd>{item.detail}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <div class="foot">
+      <a class="link-arrow" href="/research">
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+          <path d="M13 5H2M6 1L2 5l4 4" stroke="currentColor" stroke-width="1.4" />
+        </svg>
+        Research overview
+      </a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .empty {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+    border-bottom: var(--hairline);
+  }
+
+  .empty__statement {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1rem + 4vw, 4.25rem);
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+    color: var(--ink);
+  }
+
+  .empty__body {
+    display: grid;
+    gap: 1em;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 54ch;
+    padding-top: 0.35rem;
+  }
+
+  .schema {
+    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+    border-bottom: var(--hairline);
+  }
+
+  .schema__list {
+    margin: 1.5rem 0 0;
+    border-top: var(--hairline);
+  }
+
+  .schema__row {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-block: 0.9rem;
+    border-bottom: var(--hairline);
+  }
+
+  .schema__row dt {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    padding-top: 0.15rem;
+  }
+
+  .schema__row dd {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+
+  .foot {
+    padding-block: 2rem clamp(3rem, 5vw, 4rem);
+  }
+
+  @media (max-width: 820px) {
+    .empty {
+      grid-template-columns: 1fr;
+    }
+    .schema__row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+</style>
