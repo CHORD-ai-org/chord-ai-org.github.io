@@ -1,0 +1,52 @@
+---
+export interface Props {
+  size?: string;
+  label?: string;
+  tone?: 'ink' | 'inverse';
+}
+
+const { size = '1.05rem', label = 'CHORD', tone = 'ink' } = Astro.props;
+---
+
+<span
+  class:list={['wordmark', `wordmark--${tone}`]}
+  style={`--wordmark-size:${size}`}
+  role="img"
+  aria-label={label}
+>
+  <span aria-hidden="true">CH</span>
+  <span class="wordmark__o" aria-hidden="true"></span>
+  <span aria-hidden="true">RD</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: var(--wordmark-size);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+
+  .wordmark--inverse {
+    color: var(--ivory);
+  }
+
+  .wordmark__o {
+    display: inline-block;
+    width: 0.66em;
+    height: 0.66em;
+    margin-inline: 0.075em 0.075em;
+    border-radius: 50%;
+    background: var(--terracotta);
+    transform: translateY(0.01em);
+  }
+
+  .wordmark--inverse .wordmark__o {
+    background: var(--terracotta);
+  }
+</style>
