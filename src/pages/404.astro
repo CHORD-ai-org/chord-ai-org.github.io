@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found" noindex>
+  <section class="notfound">
+    <div class="shell notfound__inner">
+      <div>
+        <p class="label">Error 404</p>
+        <h1 class="notfound__code">404</h1>
+        <p class="notfound__text">
+          This page does not exist — or it existed and was replaced. The rest of the site is
+          where it should be.
+        </p>
+        <div class="notfound__actions">
+          <a class="btn btn--solid" href="/">Return home</a>
+          <a class="btn" href="/#products">Products</a>
+        </div>
+      </div>
+
+      <div class="notfound__figure" aria-hidden="true">
+        <svg viewBox="0 0 320 320" fill="none">
+          <circle cx="160" cy="160" r="96" stroke="var(--rule-strong)" stroke-width="1" />
+          <circle cx="160" cy="160" r="58" fill="var(--ink)" />
+          <ellipse
+            cx="160"
+            cy="160"
+            rx="132"
+            ry="42"
+            stroke="var(--terracotta)"
+            stroke-width="1.5"
+            transform="rotate(-24 160 160)"
+          />
+          <circle cx="272" cy="106" r="7" fill="var(--terracotta)" />
+        </svg>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound {
+    padding-block: clamp(3rem, 8vw, 7rem);
+  }
+
+  .notfound__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .notfound__code {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 2rem + 14vw, 13rem);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    margin-block: 0.5rem 1.5rem;
+  }
+
+  .notfound__text {
+    max-width: 40ch;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .notfound__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .notfound__figure svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 820px) {
+    .notfound__inner {
+      grid-template-columns: 1fr;
+    }
+    .notfound__figure {
+      max-width: 20rem;
+      order: -1;
+    }
+  }
+</style>
