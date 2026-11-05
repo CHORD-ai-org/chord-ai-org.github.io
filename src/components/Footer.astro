@@ -1,0 +1,235 @@
+---
+import Wordmark from './Wordmark.astro';
+import Sigil from './Sigil.astro';
+import { products, site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="sigil-band" aria-hidden="true">
+      {
+        products.map((p) => (
+          <a class="sigil-band__cell" href={p.href} tabindex="-1">
+            <Sigil slug={p.slug} size={34} weight={8} />
+            <span class="sigil-band__name">{p.name}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="site-foot__grid">
+      <div class="site-foot__identity">
+        <Wordmark size="1.5rem" tone="inverse" />
+        <p class="site-foot__blurb">
+          An AI infrastructure company building the models, framework, and platform that
+          let autonomous agents work beyond conventional boundaries.
+        </p>
+        <a
+          class="site-foot__gh"
+          href={site.github}
+          target="_blank"
+          rel="noopener"
+        >
+          github.com/CHORD-ai-org ↗
+        </a>
+      </div>
+
+      <nav class="site-foot__col" aria-label="Products">
+        <h2 class="site-foot__title">Products</h2>
+        <ul role="list">
+          {products.map((p) => <li><a href={p.href}>{p.name} <span class="site-foot__symbol">{p.symbol}</span></a></li>)}
+        </ul>
+      </nav>
+
+      <nav class="site-foot__col" aria-label="Research">
+        <h2 class="site-foot__title">Research</h2>
+        <ul role="list">
+          <li><a href="/research">Overview</a></li>
+          <li><a href="/research/publications">Publications</a></li>
+          <li><a href="/#operators">Operator Paradigm</a></li>
+          <li><a href="/vision">Vision</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-foot__col" aria-label="Developers">
+        <h2 class="site-foot__title">Developers</h2>
+        <ul role="list">
+          <li><a href="/developers">Overview</a></li>
+          <li><a href="/developers/documentation">Documentation</a></li>
+          <li><a href={site.github} target="_blank" rel="noopener">GitHub ↗</a></li>
+          <li><a href="/products/knock">Knock</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-foot__col" aria-label="Company">
+        <h2 class="site-foot__title">Company</h2>
+        <ul role="list">
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href={site.license} target="_blank" rel="noopener">License (GPL-3.0) ↗</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="site-foot__bar">
+      <p class="mono-note">© {year} CHORD. All rights reserved.</p>
+      <p class="mono-note">Built as a static site. Served by GitHub Pages.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-foot {
+    background: var(--ink-deep);
+    color: var(--ivory);
+    padding-block: clamp(2.5rem, 5vw, 4rem) 2rem;
+    border-top: 1px solid var(--ink-deep);
+  }
+
+  .sigil-band {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--rule-inverse);
+    border-bottom: 1px solid var(--rule-inverse);
+  }
+
+  .sigil-band__cell {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.5rem 0;
+    color: var(--terracotta);
+    border-left: 1px solid var(--rule-inverse);
+    padding-inline: clamp(0.75rem, 2vw, 1.75rem);
+    transition: color var(--dur-base) var(--ease-mechanical);
+  }
+
+  .sigil-band__cell:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .sigil-band__cell:hover {
+    color: var(--ivory);
+  }
+
+  .sigil-band__name {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--taupe-light);
+  }
+
+  .site-foot__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    padding-block: clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .site-foot__blurb {
+    margin-top: 1.25rem;
+    max-width: 34ch;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--taupe-light);
+  }
+
+  .site-foot__gh {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    color: var(--ivory);
+    border-bottom: 1px solid var(--rule-inverse);
+    padding-bottom: 0.2rem;
+  }
+
+  .site-foot__gh:hover {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+  }
+
+  .site-foot__title {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 1.15rem;
+  }
+
+  .site-foot__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .site-foot__col a {
+    font-size: 0.875rem;
+    color: var(--ivory);
+    opacity: 0.86;
+    transition: opacity var(--dur-fast) var(--ease-mechanical),
+      color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .site-foot__col a:hover {
+    opacity: 1;
+    color: var(--terracotta);
+  }
+
+  .site-foot__symbol {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--taupe);
+    margin-left: 0.25rem;
+  }
+
+  .site-foot__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--rule-inverse);
+    padding-top: 1.5rem;
+  }
+
+  .site-foot__bar .mono-note {
+    color: var(--taupe);
+  }
+
+  @media (max-width: 1080px) {
+    .site-foot__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .site-foot__identity {
+      grid-column: 1 / -1;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sigil-band {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .sigil-band__cell {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .sigil-band__name {
+      font-size: 0.5625rem;
+      letter-spacing: 0.06em;
+    }
+    .site-foot__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
