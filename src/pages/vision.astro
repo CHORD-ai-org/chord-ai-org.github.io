@@ -1,0 +1,190 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SplitSection from '../components/SplitSection.astro';
+
+const conditions = [
+  {
+    index: '01',
+    title: 'An operator survives its own extraction',
+    text: 'A step taken out of a successful run still works when the surrounding task changes. If it does not, what was extracted was a transcript, not an operator.',
+  },
+  {
+    index: '02',
+    title: 'Long-horizon state is cheap',
+    text: 'Work that runs for weeks needs a runtime where context is a maintained object — not a longer prompt, and not a summary regenerated at the start of every session.',
+  },
+  {
+    index: '03',
+    title: 'Specialized models are economical',
+    text: 'If every operation requires a frontier model, the economics never close. Rym exists to test whether compact models can carry the frequent operations.',
+  },
+  {
+    index: '04',
+    title: 'Others can build on it',
+    text: 'An abstraction only its authors can use is a product feature. Infrastructure is what other people can build on without asking permission.',
+  },
+];
+---
+
+<Base
+  title="Vision"
+  description="CHORD’s long-term vision: build the CUDA of the AI era — an abstraction layer where agent capabilities become composable, generalizable operations."
+>
+  <PageHeader
+    eyebrow="Company / 02"
+    title="Vision"
+    lede="Build the CUDA of the AI era. Stated as an ambition, not as a status report."
+  />
+
+  <div class="shell">
+    <div class="credo">
+      <p class="credo__line">The CUDA of the AI era.</p>
+      <div class="credo__meta">
+        <span class="label">Long-term vision</span>
+        <p class="mono-note">
+          CHORD has not achieved this. The phrase describes direction, and it is used here
+          with the distance intact.
+        </p>
+      </div>
+    </div>
+
+    <SplitSection label="The analogy" title="What the phrase actually means">
+      <p>
+        CUDA did one thing well: it turned a specific piece of hardware into a general
+        programming surface. Before it, using a GPU meant shaping your problem around the
+        machine’s peculiarities. After it, a large class of work became expressible,
+        portable, and fast — not because the hardware changed, but because the abstraction
+        did.
+      </p>
+      <p>
+        That is the analogy, and it is only an analogy. We have not built anything
+        equivalent. What it describes is the thing we are aiming at: a layer where agent
+        capabilities become composable operations with predictable behaviour, so that what
+        works in one place can be used somewhere else without being rebuilt from scratch.
+      </p>
+    </SplitSection>
+
+    <SplitSection label="The gap" title="Why the abstraction is missing">
+      <p>
+        Agent work today is largely bespoke. A team gets a result by arranging prompts,
+        tools, context, and retries in a particular order for a particular task. The
+        arrangement works. It is also difficult to name, difficult to test, and nearly
+        impossible to reuse — the knowledge lives in the trajectory, not in an interface.
+      </p>
+      <p>
+        Every capability wave eventually needs a programming model, because that is how work
+        stops being a performance by its author and starts being something a system can
+        repeat. Agents do not have one yet. We are working in that gap.
+      </p>
+    </SplitSection>
+
+    <SplitSection label="Conditions" title="What would have to be true">
+      <ol class="conditions" role="list">
+        {
+          conditions.map((item) => (
+            <li class="condition">
+              <span class="condition__index">{item.index}</span>
+              <div>
+                <h3 class="condition__title">{item.title}</h3>
+                <p class="condition__text">{item.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </SplitSection>
+
+    <SplitSection label="Position" title="Where CHORD is now">
+      <p>
+        Pointing at a target is not the same as arriving at it. CHORD today has a platform,
+        a framework, a research direction, and an unopened community. The vision is the
+        reason those four things exist in this order — not evidence that the vision has
+        been reached.
+      </p>
+      <p>
+        If the four conditions above turn out to be achievable, the result is not a better
+        agent. It is a different relationship between a capability and the people who need
+        it.
+      </p>
+    </SplitSection>
+  </div>
+</Base>
+
+<style>
+  .credo {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+    padding-block: clamp(2rem, 4vw, 3.5rem) clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .credo__line {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 1rem + 5vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.94;
+    letter-spacing: -0.05em;
+  }
+
+  .credo__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .credo__meta .mono-note {
+    max-width: 34ch;
+  }
+
+  .conditions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .condition {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: var(--hairline);
+  }
+
+  .condition:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .condition__index {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    color: var(--terracotta);
+    padding-top: 0.35rem;
+  }
+
+  .condition__title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.3rem;
+  }
+
+  .condition__text {
+    font-size: 0.9063rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 48ch;
+  }
+
+  @media (max-width: 900px) {
+    .credo {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
