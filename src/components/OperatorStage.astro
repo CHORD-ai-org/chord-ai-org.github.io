@@ -1,0 +1,156 @@
+---
+export interface Props {
+  stage: 1 | 2 | 3 | 4;
+  title: string;
+  index: string;
+  body: string;
+}
+
+const { stage, title, index, body } = Astro.props;
+---
+
+<article class="stage">
+  <div class="stage__figure">
+    <svg viewBox="0 0 220 150" role="presentation" fill="none">
+      {
+        stage === 1 && (
+          <>
+            <g stroke="currentColor" stroke-width="1" opacity="0.42">
+              <path d="M22 118 L58 76 L96 96 L128 44 L170 64 L196 30" />
+            </g>
+            <g fill="currentColor">
+              <circle cx="22" cy="118" r="3" />
+              <circle cx="58" cy="76" r="3" />
+              <circle cx="96" cy="96" r="3" />
+              <circle cx="128" cy="44" r="3" />
+              <circle cx="170" cy="64" r="3" />
+              <circle cx="196" cy="30" r="3" />
+            </g>
+            <g fill="currentColor" opacity="0.32">
+              <circle cx="34" cy="40" r="2" />
+              <circle cx="74" cy="122" r="2" />
+              <circle cx="112" cy="26" r="2" />
+              <circle cx="150" cy="120" r="2" />
+              <circle cx="206" cy="96" r="2" />
+              <circle cx="16" cy="78" r="2" />
+            </g>
+            <circle cx="128" cy="44" r="9" stroke="var(--terracotta)" stroke-width="1.5" />
+          </>
+        )
+      }
+      {
+        stage === 2 && (
+          <>
+            <rect x="62" y="42" width="96" height="66" stroke="currentColor" stroke-width="1.5" />
+            <g stroke="currentColor" stroke-width="1" opacity="0.4">
+              <path d="M78 90 H142 M78 42 V108 M142 42 V108" />
+            </g>
+            <g fill="currentColor">
+              <circle cx="78" cy="108" r="3.5" />
+              <circle cx="110" cy="75" r="3.5" />
+              <circle cx="142" cy="42" r="3.5" />
+            </g>
+            <path d="M40 75 H62 M158 75 H180" stroke="var(--terracotta)" stroke-width="1.5" />
+            <rect x="30" y="70" width="10" height="10" stroke="var(--terracotta)" stroke-width="1.5" />
+            <rect x="180" y="70" width="10" height="10" stroke="var(--terracotta)" stroke-width="1.5" />
+          </>
+        )
+      }
+      {
+        stage === 3 && (
+          <>
+            <g stroke="currentColor" stroke-width="1.5">
+              <rect x="18" y="58" width="42" height="34" />
+              <rect x="88" y="58" width="42" height="34" />
+              <rect x="158" y="58" width="42" height="34" />
+            </g>
+            <g stroke="var(--terracotta)" stroke-width="1.5">
+              <path d="M60 75 H88 M130 75 H158" />
+              <path d="M82 71 L88 75 L82 79 M152 71 L158 75 L152 79" />
+            </g>
+            <g fill="currentColor" opacity="0.7">
+              <circle cx="39" cy="75" r="3" />
+              <circle cx="109" cy="75" r="3" />
+              <circle cx="179" cy="75" r="3" />
+            </g>
+            <g stroke="currentColor" stroke-width="1" opacity="0.35">
+              <path d="M39 58 V38 M109 58 V38 M179 58 V38" />
+              <path d="M18 108 H200" />
+            </g>
+          </>
+        )
+      }
+      {
+        stage === 4 && (
+          <>
+            <rect x="24" y="60" width="56" height="40" stroke="currentColor" stroke-width="1.5" />
+            <circle cx="52" cy="80" r="4" fill="var(--terracotta)" />
+            <g stroke="currentColor" stroke-width="1" opacity="0.6">
+              <path d="M80 80 H116 M116 80 L134 34 M116 80 H136 M116 80 L134 122" />
+            </g>
+            <g stroke="var(--terracotta)" stroke-width="1.5">
+              <rect x="136" y="22" width="30" height="24" />
+              <rect x="138" y="68" width="30" height="24" />
+              <rect x="136" y="110" width="30" height="24" />
+            </g>
+            <g fill="currentColor" opacity="0.55">
+              <circle cx="160" cy="34" r="2.5" />
+              <circle cx="162" cy="80" r="2.5" />
+              <circle cx="160" cy="122" r="2.5" />
+            </g>
+          </>
+        )
+      }
+    </svg>
+  </div>
+
+  <div class="stage__text">
+    <span class="stage__index">{index}</span>
+    <h3 class="stage__title">{title}</h3>
+    <p class="stage__body">{body}</p>
+  </div>
+</article>
+
+<style>
+  .stage {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stage__figure {
+    color: var(--ivory);
+    border-bottom: 1px solid var(--rule-inverse);
+    padding-bottom: 1.25rem;
+  }
+
+  .stage__figure svg {
+    width: 100%;
+    height: auto;
+    max-width: 13.5rem;
+  }
+
+  .stage__index {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    color: var(--terracotta);
+    margin-bottom: 0.5rem;
+  }
+
+  .stage__title {
+    font-size: clamp(1.35rem, 1.1rem + 0.7vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--ivory);
+    margin-bottom: 0.65rem;
+  }
+
+  .stage__body {
+    font-size: 0.875rem;
+    line-height: 1.62;
+    color: var(--taupe-light);
+    max-width: 34ch;
+  }
+</style>
