@@ -1,0 +1,22 @@
+---
+export interface Props {
+  index: string;
+  title: string;
+  note?: string;
+  id?: string;
+}
+
+const { index, title, note, id } = Astro.props;
+---
+
+<header class="section-head" id={id}>
+  <span class="section-head__index">{index}</span>
+  <h2 class="section-head__title">{title}</h2>
+  {note && <p class="section-head__note">{note}</p>}
+</header>
+
+<style>
+  .section-head {
+    scroll-margin-top: 5rem;
+  }
+</style>
