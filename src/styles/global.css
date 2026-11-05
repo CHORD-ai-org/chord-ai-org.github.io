@@ -61,6 +61,10 @@ select {
    Base
    ========================================================================== */
 
+html.nav-open {
+  overflow: hidden;
+}
+
 body {
   background-color: var(--ivory);
   color: var(--ink);
