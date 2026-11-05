@@ -1,0 +1,327 @@
+---
+import Sigil from './Sigil.astro';
+
+const layers = [
+  {
+    slug: 'knock' as const,
+    symbol: 'κ',
+    name: 'Knock',
+    tier: 'Ecosystem',
+    role: 'Community & developer surface',
+    detail: 'Forum · LemmaX integration',
+    width: 'wide',
+    accent: false,
+  },
+  {
+    slug: 'thylas' as const,
+    symbol: 'τ',
+    name: 'Thylas',
+    tier: 'Platform',
+    role: 'Cloud platform & user-facing integration',
+    detail: 'Packaged WAM · workspaces · knowledge library',
+    width: 'full',
+    accent: false,
+  },
+  {
+    slug: 'wam' as const,
+    symbol: 'ω',
+    name: 'WAM',
+    tier: 'Orchestration',
+    role: 'Agent execution & scheduling',
+    detail: null,
+    width: 'full',
+    accent: true,
+  },
+  {
+    slug: 'rym' as const,
+    symbol: 'γ',
+    name: 'Rym',
+    tier: 'Model',
+    role: 'Specialized model layer',
+    detail: 'Small language models for discrete operations',
+    width: 'mid',
+    accent: false,
+  },
+];
+---
+
+<div class="arch">
+  <div class="arch__head">
+    <p class="label">Reading order</p>
+    <p class="mono-note">Bottom-up. Each layer is usable on its own; the integration between them is the work.</p>
+  </div>
+
+  <ol class="arch__stack" role="list">
+    {
+      layers.map((layer, i) => (
+        <li class={`arch__row arch__row--${layer.width}`}>
+          <div
+            class:list={['arch__block', { 'arch__block--accent': layer.accent }]}
+          >
+            <span class="arch__tier">
+              <span class="arch__tier-symbol">{layer.symbol}</span>
+              {layer.tier}
+            </span>
+
+            <span class="arch__identity">
+              <span class="arch__sigil">
+                <Sigil slug={layer.slug} size={30} weight={9} />
+              </span>
+              <span class="arch__name">{layer.name}</span>
+            </span>
+
+            <span class="arch__body">
+              <span class="arch__role">{layer.role}</span>
+              {layer.detail && <span class="arch__detail">{layer.detail}</span>}
+            </span>
+
+            {layer.accent && (
+              <ul class="arch__facets" role="list">
+                <li>Shared context</li>
+                <li>Dynamic planning</li>
+                <li>Verifiable execution</li>
+              </ul>
+            )}
+
+            <span class="arch__index">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="arch__footnote">
+    A conceptual view of where each product sits, not a claim that every component is
+    fully integrated today. Rym is a research direction.
+  </p>
+</div>
+
+<style>
+  .arch__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: var(--hairline);
+    flex-wrap: wrap;
+  }
+
+  .arch__head .mono-note {
+    max-width: 46ch;
+    text-align: right;
+  }
+
+  .arch__stack {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .arch__row {
+    position: relative;
+    padding-top: 1.5rem;
+  }
+
+  /* Spine: a single hairline running down the left edge of the stack */
+  .arch__row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .arch__row:last-child::before {
+    bottom: auto;
+    height: 1.5rem;
+  }
+
+  .arch__block {
+    position: relative;
+    display: grid;
+    grid-template-columns: 8.5rem minmax(11rem, 1fr) minmax(0, 1.15fr) auto;
+    grid-template-areas: 'tier identity body index';
+    align-items: center;
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 0.9rem;
+    border: var(--hairline-strong);
+    border-left: 0;
+    padding: clamp(1.1rem, 2vw, 1.6rem) clamp(1rem, 2vw, 1.75rem);
+    background: var(--ivory);
+    transition: background-color var(--dur-base) var(--ease-mechanical);
+  }
+
+  .arch__row--mid .arch__block {
+    width: min(100%, 62%);
+  }
+
+  .arch__row--wide .arch__block {
+    width: min(100%, 78%);
+  }
+
+  .arch__row--full .arch__block {
+    width: 100%;
+  }
+
+  .arch__block--accent {
+    background: var(--ink);
+    color: var(--ivory);
+    border-color: var(--ink);
+  }
+
+  .arch__tier {
+    grid-area: tier;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .arch__block--accent .arch__tier {
+    color: var(--taupe-light);
+  }
+
+  .arch__tier-symbol {
+    display: inline-grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    border: 1px solid currentColor;
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+    color: var(--terracotta);
+    flex: none;
+  }
+
+  .arch__identity {
+    grid-area: identity;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .arch__sigil {
+    color: var(--terracotta);
+    flex: none;
+  }
+
+  .arch__name {
+    font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .arch__body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .arch__role {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+
+  .arch__detail {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .arch__block--accent .arch__detail {
+    color: var(--taupe-light);
+  }
+
+  .arch__index {
+    grid-area: index;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    color: var(--taupe);
+    align-self: start;
+  }
+
+  .arch__block--accent .arch__index {
+    color: var(--taupe-light);
+  }
+
+  .arch__facets {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    list-style: none;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--rule-inverse);
+    padding-top: 0.85rem;
+  }
+
+  .arch__facets li {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    padding-right: 1.25rem;
+    margin-right: 1.25rem;
+    border-right: 1px solid var(--rule-inverse);
+  }
+
+  .arch__facets li:last-child {
+    border-right: 0;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .arch__footnote {
+    margin-top: 1.75rem;
+    padding-top: 1rem;
+    border-top: var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1.7;
+    color: var(--taupe);
+    max-width: 62ch;
+  }
+
+  @media (max-width: 1080px) {
+    .arch__block {
+      grid-template-columns: 7rem minmax(8rem, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        'tier identity index'
+        'body body body';
+    }
+    .arch__row--mid .arch__block,
+    .arch__row--wide .arch__block {
+      width: 100%;
+    }
+    .arch__index {
+      justify-self: end;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .arch__block {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        'tier index'
+        'identity identity'
+        'body body';
+      row-gap: 0.75rem;
+    }
+    .arch__head .mono-note {
+      text-align: left;
+    }
+  }
+</style>
