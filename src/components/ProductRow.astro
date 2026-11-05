@@ -73,8 +73,7 @@ const ordinal = String(index + 1).padStart(2, '0');
     transform: scaleY(1);
   }
 
-  .product-row > *,
-  .product-row__link > * {
+  .product-row__link > *:not(.product-row__watermark) {
     position: relative;
     z-index: 1;
   }
