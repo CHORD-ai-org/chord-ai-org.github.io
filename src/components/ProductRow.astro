@@ -1,0 +1,228 @@
+---
+import Sigil from './Sigil.astro';
+import type { Product } from '../data/site';
+
+export interface Props {
+  product: Product;
+  index: number;
+}
+
+const { product, index } = Astro.props;
+const ordinal = String(index + 1).padStart(2, '0');
+---
+
+<li class="product-row" data-reveal style={`--reveal-delay:${index * 70}ms`}>
+  <a class="product-row__link" href={product.href}>
+    <span class="product-row__index">{ordinal}</span>
+
+    <span class="product-row__sigil">
+      <Sigil slug={product.slug} size={44} weight={8} title={`${product.name} mark`} />
+    </span>
+
+    <span class="product-row__head">
+      <span class="product-row__name">{product.name}</span>
+      <span class="product-row__category">{product.category}</span>
+    </span>
+
+    <span class="product-row__desc">{product.summary}</span>
+
+    <span class="product-row__status">
+      <span class="product-row__status-label">{product.status}</span>
+      <span class="product-row__more">Learn more <span aria-hidden="true">↗</span></span>
+    </span>
+
+    <span class="product-row__watermark" aria-hidden="true">
+      <Sigil slug={product.slug} size={200} weight={5} />
+    </span>
+  </a>
+</li>
+
+<style>
+  .product-row {
+    border-top: var(--hairline);
+  }
+
+  .product-row:last-child {
+    border-bottom: var(--hairline);
+  }
+
+  .product-row__link {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.5rem 4rem minmax(9rem, 0.9fr) minmax(0, 1.7fr) minmax(9rem, 0.6fr);
+    align-items: start;
+    column-gap: clamp(1rem, 2.2vw, 2.5rem);
+    padding-block: clamp(1.75rem, 3vw, 2.75rem);
+    overflow: hidden;
+    transition: background-color var(--dur-base) var(--ease-mechanical);
+  }
+
+  .product-row__link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ivory-raised);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--dur-base) var(--ease-structural);
+    z-index: 0;
+  }
+
+  .product-row__link:hover::before,
+  .product-row__link:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  .product-row > *,
+  .product-row__link > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .product-row__index {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    color: var(--taupe);
+    padding-top: 0.4rem;
+  }
+
+  .product-row__sigil {
+    color: var(--ink);
+    transition:
+      color var(--dur-base) var(--ease-mechanical),
+      transform var(--dur-slow) var(--ease-structural);
+  }
+
+  .product-row__link:hover .product-row__sigil {
+    color: var(--terracotta);
+    transform: rotate(-90deg);
+  }
+
+  .product-row__head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .product-row__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.2rem + 1.9vw, 2.75rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+
+  .product-row__category {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .product-row__desc {
+    font-size: 0.9375rem;
+    line-height: 1.62;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  .product-row__status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding-top: 0.25rem;
+  }
+
+  .product-row__status-label {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border: 1px solid var(--rule);
+    padding: 0.3rem 0.5rem;
+  }
+
+  .product-row__more {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 0.15rem;
+    transition: color var(--dur-fast) var(--ease-mechanical);
+  }
+
+  .product-row__link:hover .product-row__more {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+  }
+
+  .product-row__watermark {
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%) scale(0.96);
+    color: var(--ink);
+    opacity: 0;
+    transition:
+      opacity var(--dur-base) var(--ease-mechanical),
+      transform var(--dur-slow) var(--ease-structural);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .product-row__link:hover .product-row__watermark {
+    opacity: 0.05;
+    transform: translateY(-50%) scale(1);
+  }
+
+  @media (max-width: 1180px) {
+    .product-row__link {
+      grid-template-columns: 2rem 3.25rem minmax(8rem, 0.8fr) minmax(0, 1.6fr);
+    }
+    .product-row__status {
+      grid-column: 3 / -1;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 0.75rem;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .product-row__link {
+      grid-template-columns: 1.75rem 1fr;
+      row-gap: 0.9rem;
+    }
+    .product-row__index {
+      grid-column: 1;
+      grid-row: 1;
+      padding-top: 0.6rem;
+    }
+    .product-row__sigil {
+      grid-column: 1;
+      grid-row: 2;
+      padding-top: 0.15rem;
+    }
+    .product-row__head {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .product-row__desc {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .product-row__status {
+      grid-column: 2;
+      grid-row: 3;
+    }
+    .product-row__watermark {
+      display: none;
+    }
+  }
+</style>
