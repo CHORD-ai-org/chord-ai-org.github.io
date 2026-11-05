@@ -1,0 +1,84 @@
+/* ==========================================================================
+   CHORD — Design tokens
+   Three visual languages: constructive geometry, editorial brutalism,
+   kinetic sculpture. Restrained palette, hard rules, no glass, no gradients.
+   ========================================================================== */
+
+:root {
+  /* ---- Color ------------------------------------------------------------ */
+  --ivory: #f1ebdd;
+  --ivory-raised: #eae2d0;
+  --ivory-deep: #e2d8c2;
+  --bone: #d8ccb2;
+
+  --ink: #493626;
+  --ink-deep: #2a1d13;
+  --ink-soft: #5f4a37;
+
+  --taupe: #927b65;
+  --taupe-light: #b3a08c;
+
+  --terracotta: #b56f50;
+  --terracotta-deep: #8e4f35;
+  --terracotta-wash: rgba(181, 111, 80, 0.14);
+
+  --rule: rgba(73, 54, 38, 0.22);
+  --rule-strong: rgba(73, 54, 38, 0.42);
+  --rule-inverse: rgba(241, 235, 221, 0.24);
+
+  --paper-invert: var(--ink-deep);
+  --ink-invert: #f1ebdd;
+
+  /* ---- Type ------------------------------------------------------------- */
+  --font-display: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --step--2: 0.6875rem;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+  --step-4: clamp(2.25rem, 1.4rem + 2.8vw, 3.75rem);
+  --step-5: clamp(2.75rem, 1.2rem + 5vw, 6rem);
+  --step-6: clamp(3.25rem, 0.8rem + 9vw, 9.5rem);
+
+  --leading-tight: 0.92;
+  --leading-snug: 1.12;
+  --leading-body: 1.62;
+
+  --tracking-display: -0.035em;
+  --tracking-label: 0.16em;
+  --tracking-wide: 0.24em;
+
+  /* ---- Space ------------------------------------------------------------ */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-11: 11rem;
+  --space-12: 15rem;
+
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --measure: 62ch;
+  --measure-tight: 44ch;
+  --shell: 1440px;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease-structural: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-mechanical: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+
+  --hairline: 1px solid var(--rule);
+  --hairline-strong: 1px solid var(--rule-strong);
+  --hairline-inverse: 1px solid var(--rule-inverse);
+}
