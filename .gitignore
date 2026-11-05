@@ -21,3 +21,9 @@ pnpm-debug.log*
 # os files
 .DS_Store
 Thumbs.db
+
+# local scratch
+.tmp/
+
+# workbuddy project data
+.workbuddy/
