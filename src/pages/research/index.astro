@@ -1,0 +1,215 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { researchAreas } from '../../data/site';
+
+const practice = [
+  {
+    index: '01',
+    title: 'Questions, not themes',
+    text: 'Every area on this page is stated as a question with a falsifiable answer. “Agent infrastructure” is a field; “what has to exist for an agent to work for days” is a research question.',
+  },
+  {
+    index: '02',
+    title: 'Results include the negative ones',
+    text: 'An operator that failed to transfer is a result. Publishing only the extractions that worked would make the paradigm look easier than it is.',
+  },
+  {
+    index: '03',
+    title: 'Artifacts when they run',
+    text: 'When a result depends on code, the code will be attached. A claim that cannot be reproduced is a claim about a demo.',
+  },
+];
+---
+
+<Base
+  title="Research"
+  description="CHORD’s research directions: agent infrastructure, small language models, dynamic planning, shared context, computational cognition, and reusable operators."
+>
+  <PageHeader
+    eyebrow="Research / 01"
+    title="Research"
+    lede="Questions we are working on, written as questions. Results appear when they can be defended — not when they are ready to sound impressive."
+  />
+
+  <div class="shell">
+    <div class="approach">
+      <p class="approach__text">
+        CHORD’s research is not separate from its products. WAM is where long-horizon
+        execution is tested, Rym is where the model question is tested, and the Operator
+        Paradigm is the abstraction both are being built against. The research agenda is
+        therefore narrow by design: it is the set of questions the products cannot avoid.
+      </p>
+    </div>
+
+    <ol class="areas" role="list">
+      {
+        researchAreas.map((area) => (
+          <li class="area" data-reveal>
+            <span class="area__index">{area.index}</span>
+            <div class="area__head">
+              <h2 class="area__title">{area.title}</h2>
+              <p class="area__question">{area.question}</p>
+            </div>
+            <p class="area__detail">{area.detail}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <section class="practice" aria-labelledby="practice-title">
+      <h2 class="label" id="practice-title">How we publish</h2>
+      <div class="practice__grid">
+        {
+          practice.map((item) => (
+            <article class="practice__item">
+              <span class="practice__index">{item.index}</span>
+              <h3 class="practice__title">{item.title}</h3>
+              <p class="practice__text">{item.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <div class="research-cta">
+      <p class="mono-note">There are no publications yet.</p>
+      <a class="link-arrow" href="/research/publications">
+        Publications index
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+          <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .approach {
+    padding-block: clamp(2rem, 3.5vw, 3rem) clamp(2.5rem, 4vw, 3.5rem);
+    border-bottom: var(--hairline);
+  }
+
+  .approach__text {
+    max-width: 64ch;
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.62;
+    color: var(--ink);
+  }
+
+  .areas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .area {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(1rem, 2.5vw, 2.5rem);
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+    border-bottom: var(--hairline);
+    align-items: start;
+  }
+
+  .area__index {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    color: var(--terracotta);
+    letter-spacing: 0.08em;
+    padding-top: 0.35rem;
+  }
+
+  .area__title {
+    font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.875rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 0.6rem;
+  }
+
+  .area__question {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 34ch;
+    text-wrap: pretty;
+  }
+
+  .area__detail {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 48ch;
+    padding-top: 0.2rem;
+  }
+
+  .practice {
+    padding-block: clamp(2.5rem, 4vw, 3.5rem);
+    border-bottom: var(--hairline);
+  }
+
+  .practice__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 3rem);
+    margin-top: 1.5rem;
+  }
+
+  .practice__item {
+    border-top: var(--hairline-strong);
+    padding-top: 1rem;
+  }
+
+  .practice__index {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    color: var(--terracotta);
+  }
+
+  .practice__title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-block: 0.4rem 0.5rem;
+  }
+
+  .practice__text {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .research-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-block: 2rem clamp(3rem, 5vw, 4rem);
+  }
+
+  @media (max-width: 880px) {
+    .area {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+      grid-template-areas:
+        'index head'
+        'detail detail';
+      row-gap: 0.9rem;
+    }
+    .area__index {
+      grid-area: index;
+    }
+    .area__head {
+      grid-area: head;
+    }
+    .area__detail {
+      grid-area: detail;
+    }
+    .practice__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
