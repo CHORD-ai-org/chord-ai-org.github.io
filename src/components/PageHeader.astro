@@ -1,0 +1,125 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string;
+  lede?: string;
+  meta?: { label: string; value: string }[];
+}
+
+const { eyebrow, title, lede, meta } = Astro.props;
+---
+
+<header class="page-head">
+  <div class="shell">
+    <p class="page-head__eyebrow">
+      <span class="page-head__mark" aria-hidden="true"></span>
+      {eyebrow}
+    </p>
+    <div class="page-head__grid">
+      <h1 class="page-head__title">{title}</h1>
+      {lede && <p class="page-head__lede">{lede}</p>}
+    </div>
+    {
+      meta && meta.length > 0 && (
+        <dl class="page-head__meta">
+          {meta.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  .page-head {
+    padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4vw, 3rem);
+    border-bottom: var(--hairline);
+  }
+
+  .page-head__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .page-head__mark {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    flex: none;
+  }
+
+  .page-head__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: 1.5rem;
+    align-items: end;
+  }
+
+  .page-head__title {
+    grid-column: 1 / span 8;
+    font-size: clamp(2.75rem, 1rem + 6.4vw, 6rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+  }
+
+  .page-head__lede {
+    grid-column: 9 / -1;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    padding-bottom: 0.35rem;
+  }
+
+  .page-head__meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1rem 2rem;
+    margin: clamp(2rem, 3.5vw, 2.75rem) 0 0;
+    padding-top: 1.25rem;
+    border-top: var(--hairline);
+  }
+
+  .page-head__meta div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .page-head__meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  .page-head__meta dd {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .page-head__title,
+    .page-head__lede {
+      grid-column: 1 / -1;
+    }
+    .page-head__lede {
+      max-width: 52ch;
+    }
+  }
+</style>
