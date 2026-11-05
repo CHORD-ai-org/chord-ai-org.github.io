@@ -45,7 +45,7 @@ import { products } from '../data/site';
       ></canvas>
       <figcaption class="hero__caption">
         <span>Fig. 01</span>
-        <span>Particle shell / three construction rings / two orbits</span>
+        <span>Particle shell / two construction rings / two orbits</span>
       </figcaption>
     </figure>
   </div>
@@ -86,14 +86,13 @@ import { products } from '../data/site';
 
   .hero__inner {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: clamp(1rem, 2vw, 2rem);
+    grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 3vw, 3rem);
     align-items: center;
     min-height: min(78vh, 46rem);
   }
 
   .hero__copy {
-    grid-column: 1 / span 8;
     padding-block: clamp(1rem, 3vw, 3rem);
     position: relative;
     z-index: 2;
@@ -125,8 +124,12 @@ import { products } from '../data/site';
     margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
   }
 
-  .hero__title span {
+  .hero__title > span {
     display: block;
+  }
+
+  .hero__title .accent {
+    display: inline;
   }
 
   .hero__lede {
@@ -144,17 +147,20 @@ import { products } from '../data/site';
   }
 
   .hero__visual {
-    grid-column: 8 / -1;
     align-self: end;
     position: relative;
-    margin-right: calc(var(--gutter) * -0.55);
-    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+    margin: 0 calc(var(--gutter) * -0.55) clamp(1.5rem, 4vw, 3rem) 0;
+    min-width: 0;
   }
 
   .hero__canvas {
     width: 100%;
     aspect-ratio: 1 / 1;
     height: auto;
+  }
+
+  .hero__caption span:first-child {
+    white-space: nowrap;
   }
 
   .hero__caption {
@@ -232,11 +238,8 @@ import { products } from '../data/site';
   }
 
   @media (max-width: 1080px) {
-    .hero__copy {
-      grid-column: 1 / span 9;
-    }
-    .hero__visual {
-      grid-column: 8 / -1;
+    .hero__inner {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
     }
     .hero__title {
       font-size: clamp(2.75rem, 7.6vw, 5.5rem);
@@ -254,7 +257,6 @@ import { products } from '../data/site';
     .hero__visual {
       margin: 1.5rem auto 2rem;
       max-width: 30rem;
-      margin-right: auto;
     }
     .hero__caption {
       max-width: 100%;

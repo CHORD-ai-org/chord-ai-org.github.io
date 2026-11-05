@@ -35,7 +35,7 @@ interface Item {
 
 const TAU = Math.PI * 2;
 const TILT = -0.34;
-const CAMERA = 3.05;
+const CAMERA = 3.4;
 const INK = '73, 54, 38';
 const ACCENT = '181, 111, 80';
 
@@ -57,7 +57,7 @@ function rotate(point: Point, angle: number, tilt: number): Point {
 }
 
 function project(point: Point, radius: number, cx: number, cy: number) {
-  const depth = CAMERA / (CAMERA - point.z * 0.72);
+  const depth = CAMERA / (CAMERA - point.z * 0.55);
   return {
     x: cx + point.x * radius * depth,
     y: cy + point.y * radius * depth,
@@ -117,9 +117,9 @@ export function mountSphere(canvas: HTMLCanvasElement) {
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    radius = Math.min(width, height) * 0.335;
+    radius = Math.min(width, height) * 0.305;
 
-    const count = width < 520 ? 460 : Math.min(920, Math.round((width * height) / 340));
+    const count = width < 520 ? 380 : Math.min(680, Math.round((width * height) / 560));
 
     particles = Array.from({ length: count }, (_, i) => {
       const y = 1 - (i / (count - 1)) * 2;
@@ -135,15 +135,14 @@ export function mountSphere(canvas: HTMLCanvasElement) {
         sx: Math.cos(angle) * spread,
         sy: Math.sin(angle) * spread,
         delay: Math.random() * 620,
-        accent: Math.random() < 0.075,
+        accent: Math.abs(y) < 0.055,
         scale: 0.72 + Math.random() * 0.56,
       };
     });
 
     ringDefs = [
-      { tiltX: 0.34, tiltZ: 0.1, r: 1.32 },
-      { tiltX: -0.52, tiltZ: 0.52, r: 1.52 },
-      { tiltX: 1.24, tiltZ: -0.22, r: 1.18 },
+      { tiltX: 0.52, tiltZ: 0.16, r: 1.22 },
+      { tiltX: -0.26, tiltZ: 0.6, r: 1.38 },
     ];
 
     rings = ringDefs.map((def) => {
@@ -156,8 +155,8 @@ export function mountSphere(canvas: HTMLCanvasElement) {
     });
 
     satellites = [
-      { plane: 0, phase: 1.1, speed: 0.00017, size: 0.105, accent: true },
-      { plane: 1, phase: 3.4, speed: 0.00026, size: 0.058, accent: false },
+      { plane: 0, phase: 1.1, speed: 0.00017, size: 0.1, accent: true },
+      { plane: 1, phase: 3.4, speed: 0.00026, size: 0.05, accent: false },
     ];
   };
 
@@ -173,7 +172,7 @@ export function mountSphere(canvas: HTMLCanvasElement) {
     // Central mass — flat fill, no glow, no gradient.
     ctx.beginPath();
     ctx.arc(cx, cy, radius * 0.985, 0, TAU);
-    ctx.fillStyle = `rgba(${INK}, 0.045)`;
+    ctx.fillStyle = `rgba(${INK}, 0.055)`;
     ctx.fill();
 
     // Rings, drawn segment by segment so depth reads correctly.
@@ -191,7 +190,7 @@ export function mountSphere(canvas: HTMLCanvasElement) {
             ctx.beginPath();
             ctx.moveTo(pa.x, pa.y);
             ctx.lineTo(pb.x, pb.y);
-            ctx.strokeStyle = `rgba(${INK}, ${0.07 + near * 0.26})`;
+            ctx.strokeStyle = `rgba(${INK}, ${0.06 + near * 0.3})`;
             ctx.lineWidth = 0.9 + near * 0.9;
             ctx.stroke();
           },
@@ -211,8 +210,9 @@ export function mountSphere(canvas: HTMLCanvasElement) {
       const x = scatterX + (proj.x - scatterX) * progress;
       const y = scatterY + (proj.y - scatterY) * progress;
       const near = (point.z + 1) / 2;
-      const alpha = (0.16 + near * 0.62) * (0.3 + progress * 0.7);
-      const size = (1.5 + near * 1.9) * p.scale * (0.6 + progress * 0.4);
+      const alpha = (p.accent ? 0.92 : 0.22 + near * 0.68) * (0.3 + progress * 0.7);
+      const size =
+        (2.4 + near * 3) * p.scale * (0.6 + progress * 0.4) * (p.accent ? 1.25 : 1);
       const colour = p.accent ? ACCENT : INK;
 
       items.push({
