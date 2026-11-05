@@ -151,7 +151,6 @@ const related = products.filter((p) => p.slug !== entry.slug);
     font-family: var(--font-mono);
     font-size: 0.625rem;
     letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
     color: var(--taupe);
     margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
   }
@@ -217,7 +216,12 @@ const related = products.filter((p) => p.slug !== entry.slug);
   .product-figure__frame {
     border: var(--hairline);
     background: var(--ivory-raised);
-    padding: clamp(1rem, 3vw, 3rem);
+    padding: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .product-figure__frame :global(svg) {
+    max-width: 58rem;
+    margin-inline: auto;
   }
 
   .product-figure__caption {
@@ -228,7 +232,6 @@ const related = products.filter((p) => p.slug !== entry.slug);
     font-family: var(--font-mono);
     font-size: 0.5625rem;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
     color: var(--taupe);
     border-bottom: var(--hairline);
     padding-block: 0.75rem;
