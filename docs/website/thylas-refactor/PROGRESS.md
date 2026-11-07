@@ -13,7 +13,7 @@ Last updated: 2026-11-07 (SP-01, SP-02 complete — **stopped at founder review 
 | Visual system + tokens (additive) | Proposed | VISUAL-DIRECTION §1 |
 | Hero compositions A/B/C + recommendation | Done, D2 open | VISUAL-DIRECTION §4 |
 | Section wireframes | Done | VISUAL-DIRECTION §5 |
-| Lo-fi prototype (static HTML) | Done | `prototypes/hero-lofi.html` |
+| Lo-fi prototype (static HTML) | Done, validated | `prototypes/hero-lofi.html` — rendered at 1440/900 and 390/844 via headless Chrome; cards fit, no overflow, no fake screenshots |
 | SP-03 interaction spec | **Blocked** — founder review | — |
 | SP-04 implementation | **Blocked** — SP-03 | — |
 | SP-05 review | **Blocked** — SP-04 | — |
