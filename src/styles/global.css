@@ -152,6 +152,11 @@ summary:focus-visible {
   color: var(--taupe-light);
 }
 
+/* Small terracotta text and marks need the lighter accent on dark ground. */
+.section--invert .section-head__index {
+  color: var(--terracotta-on-dark);
+}
+
 .section--tight {
   padding-block: clamp(3rem, 5vw, 5.5rem);
 }

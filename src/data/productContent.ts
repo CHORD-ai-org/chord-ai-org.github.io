@@ -4,7 +4,7 @@ export type Block =
   | { kind: 'note'; text: string };
 
 export interface ProductPageContent {
-  slug: 'thylas' | 'wam' | 'rym' | 'knock';
+  slug: 'wam' | 'rym' | 'knock';
   eyebrow: string;
   title: string;
   caption: string;
@@ -15,71 +15,6 @@ export interface ProductPageContent {
 }
 
 export const productContent: ProductPageContent[] = [
-  {
-    slug: 'thylas',
-    eyebrow: 'Products / τ / 01',
-    title: 'Thylas',
-    caption:
-      'Fig. τ — Three platform layers, service points on each edge, a packaged experience above them.',
-    intro: [
-      'Thylas is CHORD’s integrated cloud platform. It exists because a framework is not a product: a team that wants to use WAM on real work should not have to assemble a runtime, a workspace model, a knowledge base, and a billing relationship before the first task runs.',
-      'The platform is organized around four things — the packaged WAM experience, CHORD’s knowledge and resource library, personal workspaces, and the subscription and service infrastructure organizations require before they can adopt any of it.',
-    ],
-    sections: [
-      {
-        title: 'What the platform provides',
-        blocks: [
-          {
-            kind: 'list',
-            items: [
-              {
-                title: 'Packaged WAM',
-                text: 'WAM is usable through Thylas without integrating the framework yourself: the same orchestration layer, wrapped in a product surface with a workspace, a task history, and a place to put results.',
-              },
-              {
-                title: 'Knowledge and resource library',
-                text: 'CHORD’s accumulated references, datasets, and internal resources, available inside the workspace instead of as a separate tool that has to be wired in.',
-              },
-              {
-                title: 'Personal workspaces',
-                text: 'A persistent place for a person’s work — context, artifacts, and task state that survive between sessions rather than being rebuilt at the start of each one.',
-              },
-              {
-                title: 'Subscription and service infrastructure',
-                text: 'The commercial layer an organization needs before adoption: plans, provisioning, and support boundaries that are defined rather than improvised per customer.',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Where it sits in the stack',
-        blocks: [
-          {
-            kind: 'p',
-            text: 'Thylas is the user-facing integration layer over WAM, and the surface most people meet first. Rym, the model layer, is reached through WAM rather than directly. Knock, the developer community, sits alongside the platform rather than inside it — infrastructure is discussed in public, but the work runs in the platform.',
-          },
-        ],
-      },
-      {
-        title: 'One name change',
-        blocks: [
-          {
-            kind: 'note',
-            text: 'Thylas was previously called Sandboxer. The platform was renamed; it is the same product. Older references to Sandboxer in issues, notes, or conversation refer to Thylas.',
-          },
-        ],
-      },
-    ],
-    aside: [
-      { label: 'Category', value: 'Cloud Infrastructure' },
-      { label: 'Layer', value: 'Platform / integration' },
-      { label: 'Mark', value: 'τ — tau' },
-      { label: 'Also known as', value: 'Sandboxer (former name)' },
-      { label: 'Status', value: 'Platform available to build on' },
-    ],
-    seo: 'Thylas is CHORD’s integrated cloud platform: packaged WAM, the knowledge and resource library, personal workspaces, and subscription infrastructure. Formerly Sandboxer.',
-  },
   {
     slug: 'wam',
     eyebrow: 'Products / ω / 02',

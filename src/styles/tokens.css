@@ -20,6 +20,7 @@
 
   --terracotta: #b56f50;
   --terracotta-deep: #8e4f35;
+  --terracotta-on-dark: #d19a7a; /* 6.7:1 on --ink-deep; use for small text/marks on dark */
   --terracotta-wash: rgba(181, 111, 80, 0.14);
 
   --rule: rgba(73, 54, 38, 0.22);
@@ -81,4 +82,17 @@
   --hairline: 1px solid var(--rule);
   --hairline-strong: 1px solid var(--rule-strong);
   --hairline-inverse: 1px solid var(--rule-inverse);
+
+  /* ---- Thylas product-surface tones (additive; Thylas page only) --------
+     Source: Thylas design/tokens.css via the product Branding Desk.
+     The th- prefix keeps SP-05's "no raw product hex outside this page"
+     check mechanical. */
+  --th-surface: #fbf9f4;            /* raised schematic screens */
+  --th-paper: #f7f2e9;              /* whiteboard ground */
+  --th-line: #e6ded1;               /* hairline on raised surfaces */
+  --th-line-strong: #d8ccb9;        /* schematic borders */
+  --th-dot: rgba(73, 54, 38, 0.16); /* board dot grid — the only pattern */
+  --th-ink-2: #75604b;              /* secondary text on product surfaces */
+  --th-accent-strong: #a0553a;      /* accent that passes AA as text */
+
 }

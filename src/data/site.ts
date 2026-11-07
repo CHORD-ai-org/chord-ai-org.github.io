@@ -20,14 +20,14 @@ export const products: Product[] = [
     symbol: 'τ',
     symbolName: 'tau',
     name: 'Thylas',
-    category: 'Cloud Infrastructure',
-    layer: 'Platform layer',
+    category: 'Application Layer',
+    layer: 'Application layer',
     summary:
-      'The integrated cloud platform: a packaged WAM experience, access to the knowledge and resource library, personal workspaces, and the subscription infrastructure that enterprise deployments run on.',
+      'A computational workspace for human-AI collaboration: persistent workspaces, Markdown notes, spatial whiteboards, the interface for delegated work, and one honest AI capability.',
     oneliner:
-      'The integrated cloud platform — packaged WAM, the knowledge library, personal workspaces, and enterprise subscription infrastructure.',
+      'A computational workspace for human-AI collaboration — CHORD’s application layer.',
     href: '/products/thylas',
-    status: 'Available as a platform',
+    status: 'UI MVP in progress',
   },
   {
     slug: 'wam',
