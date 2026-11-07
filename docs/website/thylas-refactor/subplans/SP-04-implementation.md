@@ -1,6 +1,35 @@
 # SP-04 — Implementation
 
-**Status:** Blocked — SP-03. Implementation plan fixed.
+**Status:** Completed 2026-11-07.
+
+## Result
+
+| Item | Where |
+| --- | --- |
+| Page | `src/pages/products/thylas.astro` (7 sections, page-local components) |
+| Removed from shared template | `src/data/productContent.ts` (entry + slug union) — `[slug].astro` now emits wam/rym/knock only |
+| Shared data updated | `src/data/site.ts` — Thylas `category: 'Application Layer'`, new `summary`/`oneliner`, `status: 'UI MVP in progress'` |
+| Shared chrome updated | `src/components/Architecture.astro` — Thylas tier `Platform → Application`, detail line rewritten |
+| Tokens | `src/styles/tokens.css` — 7 `th-*` tokens + `--terracotta-on-dark` |
+| Global fix | `global.css` — `.section--invert .section-head__index` now uses the light accent (also fixes the homepage dark section) |
+
+## Verification
+
+- `npm run build` → 13 pages; `/products/thylas/` served from the dedicated page, no route conflict.
+- `astro check` → 0 errors / 0 warnings / 0 hints (29 files).
+- Full-site audit at 1440/1024/768/390: no horizontal overflow, exactly one h1 per page, no empty links, no missing alt, no console errors.
+- Internal link check over `dist/`: 0 broken.
+- Old claims grep (`Packaged WAM`, `knowledge and resource library`, `subscription`) → 0 matches in `dist/`.
+- Rendered review: hero, capabilities, refusals, ownership, philosophy, development, closing, mobile 390, homepage architecture block, homepage product row.
+
+## Deviations from plan
+
+| Planned | Done | Why |
+| --- | --- | --- |
+| Separate `Schematic`/`BoundaryDiagram` components | Markup + scoped styles inside the page | Single consumer; a component layer would add indirection without reuse |
+| Reveal animation on sections | None | Reading page; motion added nothing |
+| Hero state-dot pulse | Static | Product rule P7; a marketing diagram is not a live run |
+
 
 ## Route strategy
 

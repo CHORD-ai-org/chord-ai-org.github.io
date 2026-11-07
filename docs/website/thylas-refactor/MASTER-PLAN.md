@@ -1,6 +1,6 @@
 # Thylas Product Page — Master Plan
 
-**Status:** active. SP-01 and SP-02 executed; **stopped for founder review** before SP-03.
+**Status:** active. SP-01 → SP-04 executed. SP-05 review pending.
 **Date:** 2026-11-07
 **Scope:** `/products/thylas/` only. Other pages are touched only where shared data forces it (see §7).
 **Sources of truth, in order:**
@@ -56,12 +56,12 @@ The page also misses everything that makes Thylas specific: the state-ownership 
 | SP | File | Deliverable | Gate |
 | --- | --- | --- | --- |
 | SP-01 | `subplans/SP-01-content-positioning.md` | Claim audit, messaging hierarchy, full revised copy | ✅ Done |
-| SP-02 | `subplans/SP-02-visual-direction.md` | Visual system extension, hero compositions, section wireframes, lo-fi prototype | ✅ Done — **founder review gate** |
-| SP-03 | `subplans/SP-03-design-interaction.md` | Interaction spec, responsive behaviour, motion spec | Blocked on review |
-| SP-04 | `subplans/SP-04-implementation.md` | The page, implemented | Blocked on SP-03 |
-| SP-05 | `subplans/SP-05-review-polish.md` | Visual/a11y/perf/consistency review | Blocked on SP-04 |
+| SP-02 | `subplans/SP-02-visual-direction.md` | Visual system extension, hero compositions, section wireframes, lo-fi prototype | ✅ Done |
+| SP-03 | `subplans/SP-03-design-interaction.md` | Interaction spec, responsive behaviour, motion spec | ✅ Done (D1–D5 at defaults) |
+| SP-04 | `subplans/SP-04-implementation.md` | The page, implemented | ✅ Done |
+| SP-05 | `subplans/SP-05-review-polish.md` | Visual/a11y/perf/consistency review | ⏳ Pending |
 
-**Stop point:** after SP-02. No implementation before founder sign-off on positioning (SP-01) and visual direction (SP-02).
+**Review gate:** passed by founder instruction ("start writing the page"). D1–D5 were taken at their defaults and are recorded in SP-03; any of them can still be reversed before SP-05 closes.
 
 ---
 
