@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thylas — lo-fi prototype (SP-02)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+  :root{
+    --ivory:#F1EBDD; --surface:#FBF9F4; --paper:#F7F2E9;
+    --ink:#493626; --ink-2:#75604B; --taupe:#927B65;
+    --line:#E6DED1; --line-strong:#D8CCB9;
+    --accent:#B56F50; --accent-strong:#A0553A;
+    --dark:#2A1D13; --ivory-dim:rgba(241,235,221,.68);
+    --ui:'Archivo',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--ivory);color:var(--ink);font-family:var(--ui);line-height:1.62;-webkit-font-smoothing:antialiased}
+  .shell{max-width:1440px;margin-inline:auto;padding-inline:clamp(20px,4vw,64px)}
+  section{border-top:1px solid var(--line-strong);padding-block:clamp(56px,8vw,110px)}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe)}
+  .mono--ink{color:var(--ink)}
+  .lede{font-size:clamp(1rem,.95rem+.4vw,1.25rem);line-height:1.55;color:var(--ink-2);max-width:60ch}
+  .secthead{display:grid;grid-template-columns:64px 1fr;gap:24px;margin-bottom:clamp(32px,4vw,56px)}
+  .secthead h2{font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:700;letter-spacing:-.035em;line-height:1.02}
+  .secthead .idx{font-family:var(--mono);font-size:11px;color:var(--accent-strong);padding-top:.6em}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);border:1px solid var(--line-strong);padding:4px 8px;white-space:nowrap}
+  .chip::before{content:'';width:5px;height:5px;background:var(--accent);flex:none}
+  .pull{border-left:2px solid var(--accent);padding:14px 20px;font-size:clamp(1.05rem,1.6vw,1.35rem);font-weight:600;letter-spacing:-.02em;max-width:56ch}
+
+  /* ---------- 01 hero ---------- */
+  .hero{border-top:0;padding-block:clamp(48px,6vw,88px) clamp(40px,5vw,72px)}
+  .hero__grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:center}
+  .hero h1{font-size:clamp(2.4rem,4.6vw,4.4rem);font-weight:800;line-height:.98;letter-spacing:-.045em;margin-block:20px 22px}
+  .hero h1 em{font-style:normal;color:var(--accent-strong)}
+  .hero__status{margin-top:26px;padding-top:12px;border-top:1px solid var(--line);max-width:420px}
+  .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;padding:13px 18px;border:1px solid var(--ink)}
+  .btn--solid{background:var(--ink);color:var(--ivory)}
+  /* board schematic */
+  .board{position:relative;aspect-ratio:1.18/1;background:var(--paper);border:1px solid var(--line-strong);
+    background-image:radial-gradient(rgba(73,54,38,.16) 1px,transparent 1.4px);background-size:16px 16px}
+  .intent{position:absolute;left:0;top:50%;width:42%;height:1px;background:var(--ink)}
+  .intent span{position:absolute;left:8px;top:-20px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+  .card{position:absolute;background:var(--surface);border:1px solid var(--line-strong);padding:10px 12px;min-width:120px}
+  .card__k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe);display:block;margin-bottom:5px}
+  .card__v{font-size:12.5px;font-weight:600;letter-spacing:-.01em}
+  .card__m{font-family:var(--mono);font-size:10px;color:var(--ink-2);display:block;margin-top:6px}
+  .card--file{left:40%;top:13%}
+  .card--note{left:36%;top:54%}
+  .card--section{left:64%;top:30%}
+  .card--live{border-left:2px solid var(--accent)}
+  .card--live{left:62%;top:72%}
+  @media (max-width:640px){
+    .board{aspect-ratio:1/1.08}
+    .card{min-width:104px;padding:8px 10px}
+    .card__v{font-size:11.5px}
+    .card--file{left:30%;top:8%}
+    .card--section{left:50%;top:28%}
+    .card--note{left:20%;top:47%}
+    .card--live{left:38%;top:74%}
+  }
+  .card--live .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:6px}
+  .board__label{position:absolute;left:16px;top:14px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe)}
+
+  /* ---------- 02 workspace ---------- */
+  .cap{display:grid;grid-template-columns:56px minmax(220px,.9fr) minmax(0,1.35fr);gap:clamp(16px,2.4vw,40px);padding-block:30px;border-top:1px solid var(--line)}
+  .cap:last-of-type{border-bottom:1px solid var(--line)}
+  .cap h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  .cap p{font-size:.94rem;color:var(--ink-2);max-width:58ch}
+  .cap__i{font-family:var(--mono);font-size:11px;color:var(--accent-strong);padding-top:.5em}
+  .honesty{margin-top:36px;padding:16px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-align:center}
+
+  /* ---------- 03 beyond ---------- */
+  .not{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.2fr) minmax(0,1.2fr);gap:clamp(16px,2.4vw,40px);padding-block:28px;border-top:1px solid var(--line)}
+  .not:last-of-type{border-bottom:1px solid var(--line)}
+  .not h3{font-size:1.15rem;font-weight:700;letter-spacing:-.02em}
+  .not p{font-size:.9rem;color:var(--ink-2)}
+  .not .instead{border-left:2px solid var(--accent);padding-left:16px}
+
+  /* ---------- 04 architecture ---------- */
+  .own{display:grid;grid-template-columns:1fr 1px 1fr;gap:clamp(20px,3vw,56px);align-items:stretch}
+  .own__col{background:var(--surface);border:1px solid var(--line-strong);padding:24px}
+  .own__col h3{font-size:1.05rem;font-weight:700;margin-bottom:14px}
+  .own__col ul{list-style:none}
+  .own__col li{font-size:.9rem;color:var(--ink-2);padding-block:7px;border-top:1px solid var(--line)}
+  .own__mid{background:var(--ink);width:1px}
+  .archfoot{margin-top:14px;font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--taupe);letter-spacing:.03em}
+  .archfoot b{color:var(--ink-2);font-weight:500}
+
+  /* ---------- 05 philosophy (dark) ---------- */
+  .dark{background:var(--dark);color:var(--ivory)}
+  .dark .mono{color:rgba(241,235,221,.55)}
+  .dark .secthead .idx{color:var(--accent)}
+  .dark .lede{color:rgba(241,235,221,.72)}
+  .prin{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,40px);margin-top:8px}
+  .prin article{border-top:1px solid rgba(241,235,221,.25);padding-top:18px}
+  .prin h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
+  .prin p{font-size:.9rem;line-height:1.65;color:rgba(241,235,221,.72)}
+  .dark .pull{border-left-color:var(--accent);margin-top:44px;color:var(--ivory)}
+
+  /* ---------- 06 development ---------- */
+  .stage{display:grid;grid-template-columns:minmax(170px,.7fr) minmax(0,1.6fr);gap:clamp(16px,2.4vw,40px);padding-block:26px;border-top:1px solid var(--line)}
+  .stage:last-of-type{border-bottom:1px solid var(--line)}
+  .stage h3{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+  .stage ul{list-style:none}
+  .stage li{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink-2);padding-left:18px;position:relative}
+  .stage li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--accent)}
+
+  /* ---------- 07 closing ---------- */
+  .close h2{font-size:clamp(1.9rem,3.4vw,3.2rem);font-weight:700;letter-spacing:-.04em;line-height:1.04;max-width:22ch}
+  .close__links{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px}
+  .close__links a{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;border-bottom:1px solid var(--line-strong);padding-bottom:4px}
+  .close__links a:hover{color:var(--accent-strong);border-color:var(--accent-strong)}
+
+  @media (max-width:920px){
+    .hero__grid{grid-template-columns:1fr}
+    .cap{grid-template-columns:40px 1fr}
+    .cap p{grid-column:2}
+    .not{grid-template-columns:1fr}
+    .not .instead{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px}
+    .own{grid-template-columns:1fr}
+    .own__mid{height:1px;width:auto}
+    .prin{grid-template-columns:1fr}
+    .stage{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 HERO -->
+<section class="hero">
+  <div class="shell hero__grid">
+    <div>
+      <p class="mono">CHORD · τ · Application layer</p>
+      <h1>A computational workspace for human-AI collaboration<em>.</em></h1>
+      <p class="lede">Thylas is where your material, the work you do on it, and the work you hand to the system sit in the same room. It is CHORD's application layer: an organized, persistent environment for knowledge, resources, and computational work.</p>
+      <div class="btns">
+        <a class="btn btn--solid" href="#workspace">What it does today</a>
+        <a class="btn" href="#architecture">How it fits CHORD</a>
+      </div>
+      <p class="mono hero__status" style="margin-top:28px;padding-top:12px;border-top:1px solid var(--line);max-width:420px">UI MVP in progress · shell live, data sample · 2026-11</p>
+    </div>
+    <div class="board" role="img" aria-label="Schematic of a Thylas workspace board: an intent line entering from the left, passing file, note and section cards, ending at a live card produced by run 12.">
+      <span class="board__label">Workspace · research-papers</span>
+      <div class="intent"><span>intent →</span></div>
+      <div class="card card--file">
+        <span class="card__k">File</span><span class="card__v">survey-2026.pdf</span><span class="card__m">PDF · 2.1 MB</span>
+      </div>
+      <div class="card card--note">
+        <span class="card__k">Note</span><span class="card__v">contradictions.md</span><span class="card__m">[[claim-3]] · backlinks 4</span>
+      </div>
+      <div class="card card--section">
+        <span class="card__k">Section</span><span class="card__v">Related work</span><span class="card__m">6 cards</span>
+      </div>
+      <div class="card card--live">
+        <span class="card__k"><span class="dot"></span>Live · read-only</span><span class="card__v">Weakest-support claim</span><span class="card__m">produced by run #12</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THE WORKSPACE -->
+<section id="workspace">
+  <div class="shell">
+    <div class="secthead">
+      <span class="idx">02</span>
+      <div>
+        <h2>The workspace</h2>
+        <p class="lede" style="margin-top:14px">Five areas, because there are five things a person does here: orient, organise, think, delegate, administer. Each is labelled with what it is today — not with what it is meant to become.</p>
+      </div>
+    </div>
+
+    <div class="cap"><span class="cap__i">01</span>
+      <div><h3>Workspace &amp; Files</h3><span class="chip">In the build</span></div>
+      <p>The central object. Everything you open — a file, a note, a board, a run — lives inside a workspace scope, and the scope survives tabs, sessions and switching. File tree, table and preview are navigable; upload is not connected yet.</p>
+    </div>
+    <div class="cap"><span class="cap__i">02</span>
+      <div><h3>Notes &amp; Documents</h3><span class="chip">In development</span></div>
+      <p>Markdown-first knowledge management: <b>[[wikilinks]]</b>, backlinks, autosave, conflict handling. Obsidian-inspired, minus the plugin market.</p>
+    </div>
+    <div class="cap"><span class="cap__i">03</span>
+      <div><h3>Whiteboard</h3><span class="chip">In development</span></div>
+      <p>Spatial boards for thinking in parallel: cards, sections, edges, zoom to pointer, undo. Heptabase-inspired. A card can be authored (yours, editable) or live (owned by a run, read-only).</p>
+    </div>
+    <div class="cap"><span class="cap__i">04</span>
+      <div><h3>Processes</h3><span class="chip">In the build</span></div>
+      <p>The interface for delegated work: five states — <b>queued · running · needs you · done · failed</b> — filters, and a run detail view. Today it runs on a labelled simulator; the view is built to be fed by WAM.</p>
+    </div>
+    <div class="cap"><span class="cap__i">05</span>
+      <div><h3>AI</h3><span class="chip">In development</span></div>
+      <p>One capability, done honestly: a question answered by DeepSeek through a server-side endpoint, labelled <b>DeepSeek · dev endpoint</b>. It answers; it never pretends to start a process.</p>
+    </div>
+    <div class="cap"><span class="cap__i">06</span>
+      <div><h3>WAM</h3><span class="chip">Deferred</span></div>
+      <p>Deep integration is the point of the architecture, not part of the current build. The transport is the open problem, and it is named as one.</p>
+    </div>
+
+    <p class="honesty">The shell is real. The data is sample data. Nothing on this page is a screenshot.</p>
+  </div>
+</section>
+
+<!-- 03 BEYOND -->
+<section>
+  <div class="shell">
+    <div class="secthead">
+      <span class="idx">03</span>
+      <div>
+        <h2>Beyond a conventional workspace</h2>
+        <p class="lede" style="margin-top:14px">Thylas is built against three products it refuses to be. Each refusal decides something concrete about the interface.</p>
+      </div>
+    </div>
+    <div class="not">
+      <h3>Not a productivity workspace</h3>
+      <p>In Notion or Heptabase, every object was made by a person. Thylas has a second class: work delegated elsewhere, with a lifecycle nobody controls — it can change while you are not looking.</p>
+      <p class="instead">State is a first-class element. A running job is never visually indistinguishable from a finished note.</p>
+    </div>
+    <div class="not">
+      <h3>Not a chat product</h3>
+      <p>Chat orders everything by time and dies with the session. The conversation is a good input method and a bad organising principle.</p>
+      <p class="instead">Intent is taken as text, then filed as an object. The record is the plan and the artifacts, not the transcript.</p>
+    </div>
+    <div class="not">
+      <h3>Not a cloud console</h3>
+      <p>A console reports on the provider's resources. Thylas answers a different question: did your work move forward, and what needs you.</p>
+      <p class="instead">Overview orients; cost lives in Account, one click away.</p>
+    </div>
+    <p class="pull" style="margin-top:44px">And one thing none of them have: provenance. Every artifact carries which run produced it — and removing a file breaks the things that reference it.</p>
+  </div>
+</section>
+
+<!-- 04 ARCHITECTURE -->
+<section id="architecture">
+  <div class="shell">
+    <div class="secthead">
+      <span class="idx">04</span>
+      <div>
+        <h2>Architecture</h2>
+        <p class="lede" style="margin-top:14px">The distinction is not "UI versus backend". It is which state each component is the authority for.</p>
+      </div>
+    </div>
+    <div class="own">
+      <div class="own__col">
+        <h3>Thylas owns — working state</h3>
+        <ul>
+          <li>Which workspace, what is open</li>
+          <li>Where a note lives, what a board looks like</li>
+          <li>What you named things, what you have seen</li>
+          <li>Files, notes, boards, preferences, open tabs</li>
+        </ul>
+      </div>
+      <div class="own__mid" aria-hidden="true"></div>
+      <div class="own__col">
+        <h3>WAM owns — reasoning state</h3>
+        <ul>
+          <li>What the intent means</li>
+          <li>What the plan is, and its revisions</li>
+          <li>Which agent is running, what is shared across sessions</li>
+          <li>Run state, scheduling, retry, model choice</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pull" style="margin-top:44px">If a Thylas screen has to decide something about your work, the screen is wrong. Thylas collects the instruction, WAM decides, Thylas reports.</p>
+    <p class="archfoot"><b>Position within CHORD:</b> WAM is the orchestration layer and Thylas's future counterpart — not connected yet. Rym, the model layer, is called by WAM, never by Thylas. Knock is the community, out of scope by decision, linked at most.</p>
+  </div>
+</section>
+
+<!-- 05 DESIGN PHILOSOPHY -->
+<section class="dark">
+  <div class="shell">
+    <div class="secthead">
+      <span class="idx">05</span>
+      <div>
+        <h2>Design philosophy</h2>
+        <p class="lede" style="margin-top:14px">The product is built as an instrument, not a dashboard. Three principles carry most of that weight.</p>
+      </div>
+    </div>
+    <div class="prin">
+      <article>
+        <p class="mono" style="margin-bottom:10px">P·1</p>
+        <h3>Continuity</h3>
+        <p>Every boundary is a 1px line that runs the full length of its region. Raised surfaces are lighter; recessed are darker. Never the reverse.</p>
+      </article>
+      <article>
+        <p class="mono" style="margin-bottom:10px">P·2</p>
+        <h3>Structure</h3>
+        <p>A 4px grid, seven type steps, one accent reserved for state. Hue never encodes structure: remove all colour and the layout still reads.</p>
+      </article>
+      <article>
+        <p class="mono" style="margin-bottom:10px">P·3</p>
+        <h3>Agency</h3>
+        <p>The material is yours. Authored objects are editable; delegated objects are read-only until they land. The interface reports state instead of making decisions.</p>
+      </article>
+    </div>
+    <p class="pull">The one-sentence test: cover the logo. If the surface could be mistaken for project-management SaaS, something on it is generic.</p>
+  </div>
+</section>
+
+<!-- 06 DEVELOPMENT -->
+<section>
+  <div class="shell">
+    <div class="secthead">
+      <span class="idx">06</span>
+      <div>
+        <h2>Development</h2>
+        <p class="lede" style="margin-top:14px">The state of the repository, dated 2026-11-07. Stated as the repo states it — if this table and the build disagree, the build wins.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div><h3>Working today</h3><span class="chip">In the build</span></div>
+      <ul>
+        <li>Application shell: rail, typed tabs with persistence, context panel, ⌘K palette, workspace switching</li>
+        <li>Nine screens render — Overview, Files, Notes, Whiteboard, Processes, Recently, Account</li>
+        <li>25 unit assertions, 55 end-to-end assertions</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div><h3>In development</h3><span class="chip">Active</span></div>
+      <ul>
+        <li>Notes editor — Markdown, wikilinks, backlinks, conflict handling</li>
+        <li>Whiteboard rebuild — cards, sections, edges, pointer-anchored zoom</li>
+        <li>DeepSeek endpoint behind a server-side path</li>
+        <li>Process states and filters</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div><h3>Not started</h3><span class="chip">Planned</span></div>
+      <ul>
+        <li>File upload and storage</li>
+        <li>Authentication and organisation membership — the authorization model is an open question (N2)</li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div><h3>Deferred</h3><span class="chip">Deferred</span></div>
+      <ul>
+        <li>WAM integration — transport unresolved (N1)</li>
+        <li>Billing, quotas, invoicing · real-time collaboration · mobile</li>
+      </ul>
+    </div>
+    <p class="mono" style="margin-top:32px;padding-top:14px;border-top:1px solid var(--line);line-height:2">Open before implementation: N1 WAM transport · N2 who owns authentication · N5 whether the browser can reach WAM directly. They block screens, not documents.</p>
+  </div>
+</section>
+
+<!-- 07 CLOSING -->
+<section class="close">
+  <div class="shell">
+    <p class="mono" style="margin-bottom:18px">07 · Closing</p>
+    <h2>The workspace is the product. The rest of CHORD is what makes it computable.</h2>
+    <div class="close__links">
+      <a href="#">WAM — orchestration</a>
+      <a href="#">Research</a>
+      <a href="#">GitHub ↗</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
