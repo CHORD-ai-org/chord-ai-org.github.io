@@ -13,13 +13,13 @@ const capabilities = [
   {
     index: '02',
     title: 'Notes & Documents',
-    status: 'In development',
+    status: 'In the build',
     body: 'Markdown-first knowledge management: [[wikilinks]], backlinks, autosave, conflict handling. Obsidian-inspired, minus the plugin market.',
   },
   {
     index: '03',
     title: 'Whiteboard',
-    status: 'In development',
+    status: 'In the build',
     body: 'Spatial boards for thinking in parallel: cards, sections, edges, zoom to pointer, undo. Heptabase-inspired. A card can be authored — yours, editable — or live: owned by a run, read-only.',
   },
   {
@@ -31,7 +31,7 @@ const capabilities = [
   {
     index: '05',
     title: 'AI',
-    status: 'In development',
+    status: 'In the build',
     body: 'One capability, done honestly: a question answered by DeepSeek through a server-side endpoint, labelled DeepSeek · dev endpoint. It answers; it never pretends to start a process.',
   },
   {
@@ -88,27 +88,28 @@ const stages = [
     title: 'Working today',
     status: 'In the build',
     items: [
-      'Application shell: rail, typed tabs with persistence, context panel, ⌘K palette, workspace switching',
-      'Nine screens render — Overview, Files, Notes, Whiteboard, Processes, Recently, Account',
-      '25 unit assertions, 55 end-to-end assertions',
+      'Application shell — rail, typed tabs with persistence, context panel, ⌘K palette, per-workspace restore',
+      'Notes — Markdown source, [[wikilinks]], backlinks, idle save, conflict review, dirty guard',
+      'Whiteboard — cards, sections, edges, pointer-anchored zoom, 24px targets at any zoom',
+      'Processes — five states, URL filters, labelled simulator; AI panel behind a server-side path',
     ],
   },
   {
     title: 'In development',
     status: 'Active',
     items: [
-      'Notes editor — Markdown, wikilinks, backlinks, conflict handling',
-      'Whiteboard rebuild — cards, sections, edges, pointer-anchored zoom',
-      'DeepSeek endpoint behind a server-side path',
-      'Process states and filters',
+      'Visual quality pass — radius, typeface, icons, surface, control states',
+      'Composition of the list surfaces: boards, processes, overview at 1440',
+      'Context chip on the AI panel; compressed trace on the run view',
     ],
   },
   {
     title: 'Not started',
     status: 'Planned',
     items: [
-      'File upload and storage',
-      'Authentication and organisation membership — the authorization model is an open question (N2)',
+      'Account surface and preferences',
+      'Integration gates and the final cross-surface audit',
+      'File upload and storage; authentication and organisation membership — the authorization model is open (N2)',
     ],
   },
   {
@@ -363,7 +364,7 @@ const stages = [
         <div>
           <h2 class="thead__title">Development</h2>
           <p class="thead__lede">
-            The state of the repository, dated 2026-11-07. Stated as the repo states it — if
+            The state of the repository, dated 2026-11-09. Stated as the repo states it — if
             this table and the build disagree, the build wins.
           </p>
         </div>
