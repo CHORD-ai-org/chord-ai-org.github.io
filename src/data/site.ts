@@ -83,6 +83,7 @@ export const site = {
   description:
     'CHORD is an AI infrastructure company. We build the infrastructure, models, and computational approaches that let autonomous agents work on long-horizon, complex tasks.',
   github: 'https://github.com/CHORD-ai-org',
+  email: 'zhaoceaseer@gmail.com',
   githubRepo: 'https://github.com/CHORD-ai-org/chord-ai-org.github.io',
   license: 'https://github.com/CHORD-ai-org/chord-ai-org.github.io/blob/main/LICENSE',
 };

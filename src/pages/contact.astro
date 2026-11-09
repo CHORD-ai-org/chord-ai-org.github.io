@@ -25,18 +25,28 @@ const include = [
 
 <Base
   title="Contact"
-  description="How to reach CHORD: the GitHub organization and, when it opens, the Knock developer community."
+  description="How to reach CHORD: email, the GitHub organization, and — when it opens — the Knock developer community."
 >
   <PageHeader
     eyebrow="Contact / 01"
     title="Contact"
-    lede="The channels that reach CHORD today. A direct address is not published yet, and we would rather say that than list a mailbox nobody reads."
+    lede="The channels that reach CHORD today. Email for a first conversation; GitHub for the public record."
   />
 
   <div class="shell">
     <div class="contact-grid">
+      <a class="contact-card" href={`mailto:${site.email}`}>
+        <span class="contact-card__label label">Direct</span>
+        <span class="contact-card__title contact-card__title--email">{site.email}</span>
+        <span class="contact-card__detail">
+          Write for a first conversation: a question, a proposed collaboration, or a platform
+          enquiry. Include what you are trying to do, what you have tried, and what a good
+          outcome looks like.
+        </span>
+      </a>
+
       <a class="contact-card" href={site.github} target="_blank" rel="noopener">
-        <span class="contact-card__label label">Primary channel</span>
+        <span class="contact-card__label label">Public record</span>
         <span class="contact-card__title">GitHub Organization ↗</span>
         <span class="contact-card__detail">
           Open an issue in the relevant repository. If the topic does not belong to a
@@ -73,9 +83,9 @@ const include = [
 
     <SplitSection label="Enterprise" title="Platform, research, and collaboration">
       <p>
-        Inquiries about Thylas access, Rym research collaboration, or building on WAM should
-        go through the GitHub organization for now, with enough context to route them
-        correctly. A dedicated commercial contact will be published here when it exists.
+        Inquiries about Thylas access, Rym research collaboration, or building on WAM can go
+        to the address above, with enough context to route them correctly. GitHub remains the
+        public record for anything that belongs in a repository.
       </p>
       <p>
         We do not publish response-time commitments on this site. What we can say is that a
@@ -89,7 +99,7 @@ const include = [
 <style>
   .contact-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     border-top: var(--hairline-strong);
     border-left: var(--hairline);
   }
@@ -113,6 +123,12 @@ const include = [
     font-weight: 600;
     letter-spacing: -0.03em;
     line-height: 1.05;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-card__title--email {
+    font-size: clamp(1.05rem, 0.9rem + 0.8vw, 1.5rem);
+    letter-spacing: -0.02em;
   }
 
   .contact-card__detail {
@@ -174,7 +190,7 @@ const include = [
     max-width: 48ch;
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 1080px) {
     .contact-grid {
       grid-template-columns: 1fr;
     }

@@ -20,7 +20,7 @@
 
 **Purpose.** Answer one question: *"If I find the problems CHORD is working on interesting, how can I participate?"* The page names the work that is still open, shows the four ways in, and gives an honest next step.
 
-**Not a hiring page.** No open roles, no application funnel, no "careers" vocabulary. `[ASSUMPTION]` Nothing in the repository establishes a hiring process, published positions, compensation, or a dedicated intake address.
+**Not a hiring page.** No open roles, no application funnel, no "careers" vocabulary. `[ASSUMPTION]` Nothing in the repository establishes a hiring process, published positions, compensation, or a dedicated hiring intake. **Update 2026-11-09:** the founder supplied `zhaoceaseer@gmail.com`; it is published on `/contact` as a direct address for a first conversation. It is a channel, not an application route.
 
 **Narrative hierarchy** (the order of weight, not the order of sections):
 
@@ -102,7 +102,7 @@ Each direction is a complete hero: eyebrow / H1 / lede / CTA pair.
 | C | Low — "beyond boundaries" is close to the site's own tagline and to generic AI copy | Too close; the homepage already says "beyond conventional boundaries" | Clear | Slight grandeur; risks sounding theatrical | Reject |
 | **D** | **High — an honest statement about unfinished work, not a recruitment claim** | **Strong: the homepage states the direction, this states its incompleteness** | **High; the lede names what is unfinished** | **Curiosity + agency, no hype** | **Recommended** |
 
-**Why D.** It is the only direction that can carry all three narrative levels without a slogan. "Not finished" does the work of *Join an Exploration*; the lede's "AI infrastructure company" does *Join a Company*; the refusal to name a grand cause does *Join a Movement* by tone rather than declaration. It also matches the site's established honesty: the publications page says "No publications", the documentation page says "Nothing to read yet", the contact page says a direct address is not published. An unfinished-state hero is continuous with that voice.
+**Why D.** It is the only direction that can carry all three narrative levels without a slogan. "Not finished" does the work of *Join an Exploration*; the lede's "AI infrastructure company" does *Join a Company*; the refusal to name a grand cause does *Join a Movement* by tone rather than declaration. It also matches the site's established honesty: the publications page says "No publications", the documentation page says "Nothing to read yet", the contact page states the limits of each channel. An unfinished-state hero is continuous with that voice.
 
 **Risk and mitigation.** "Interesting" could read as self-congratulatory. Mitigation: the lede immediately replaces it with three concrete categories of unfinished work (questions, abstractions, systems). `[ALT]` If the founder prefers a question-led hero: `What would you work on here?` — slightly weaker on the "company" level.
 
@@ -212,7 +212,7 @@ Section lede: `Participation does not require a posted role, a title, or an invi
 | Might contribute | `The question itself. A different framing of a problem we have been looking at from one side. A critique.` |
 | What it could look like | `A first message that says what you are trying to do, what you have tried, and what a good outcome would look like. That is enough to start a conversation; it is not an application and we cannot promise a reply time.` |
 | CTA | `How to reach CHORD → /contact` |
-| Guard | The contact page states that no direct address is published and the GitHub organization is the channel. Do not invent one. |
+| Guard | `/contact` publishes the founder-supplied address and the GitHub organization. Use those two channels only; do not invent a third. |
 
 ---
 
@@ -222,20 +222,21 @@ Section lede: `Participation does not require a posted role, a title, or an invi
 
 | Destination | Exact URL | Status | Use |
 | --- | --- | --- | --- |
-| `/contact` | internal | Exists. Says no direct address; GitHub org is the channel | Core Builders · Independent Explorers · closing |
+| `/contact` | internal | Exists. Publishes the email address and the GitHub organization | Core Builders · Independent Explorers · closing |
+| `mailto:zhaoceaseer@gmail.com` | email | Founder-supplied 2026-11-09; stored as `site.email` | P/04 secondary · closing |
 | `/research` | internal | Exists. Six questions, honest status labels | Research Collaborators |
 | `/#operators` | internal anchor | Exists on homepage | Research Collaborators (secondary) |
 | `/developers` | internal | Exists. Names repos, issues, and contribution convention | Core Builders · Open-source Contributors |
 | `https://github.com/CHORD-ai-org` | external | In `src/data/site.ts` | Open-source Contributors · closing |
 | `/about`, `/vision`, `/products/*` | internal | Exist | Context links only, never primary CTAs |
 
-**Forbidden destinations** `[REC — rule for the implementer]`: `/join/apply`, any `mailto:`, any form endpoint, Knock (`In development`), `/developers/documentation` (`In preparation`), `/research/publications` as an "apply" link (it is an empty index), any waitlist, any calendar. The only URL in this document that does not exist today is `/join/` itself — the page being specified. Every destination above is a live route or the one external link already in `site.ts`.
+**Forbidden destinations** `[REC — rule for the implementer]`: `/join/apply`, any form endpoint other than mail, Knock (`In development`), `/developers/documentation` (`In preparation`), `/research/publications` as an "apply" link (it is an empty index), any waitlist, any calendar. `mailto:` is allowed since 2026-11-09, using `site.email` only — never a second address. The only route in this document that does not exist before implementation is `/join/` itself.
 
 **CTA labels.** Verb + object, sentence case, no terminal period: `See the open work`, `Ways to participate`, `Read the six questions`, `Start with what exists`, `How to reach CHORD`. External links carry `↗ External`.
 
 **Honesty microcopy** `[REC]`, placed once near the bottom of the participation section:
 
-> `There is no application form on this page. The GitHub organization is the channel that reaches us today; a direct contact address is not published yet.`
+> `There is no application form on this page. Email and the GitHub organization are the channels that reach us today.`
 
 `[OPEN]` This sentence restates `/contact`. Confirm that duplication is acceptable before implementation; otherwise link to `/contact` and drop the second clause.
 
@@ -249,7 +250,7 @@ Section eyebrow: `03 · Closing`
 >
 > **Line under it:** `Bring a question, an artifact, or a piece of work you want to stay with.`
 >
-> **Links:** `How to reach CHORD → /contact` · `GitHub ↗ → https://github.com/CHORD-ai-org` · `Back to the homepage → /`
+> **Links:** `How to reach CHORD → /contact` · `Email → site.email` · `GitHub ↗ → https://github.com/CHORD-ai-org` · `Back to the homepage → /`
 
 `[ALT]` Statement: `Start with the question you cannot stop thinking about.` — warmer, but it shifts the centre of gravity from the work to the visitor's feelings. Keep as an alternative only.
 
@@ -290,13 +291,13 @@ Section eyebrow: `03 · Closing`
 - P/01 guard line: `We do not publish open positions on this page.`
 - P/02 Research Collaborators — CTA `Read the six questions` → `/research`
 - P/03 Open-source Contributors — CTA `Developers` → `/developers`, `GitHub organization ↗` → external
-- P/04 Independent Explorers — CTA `How to reach CHORD` → `/contact`
-- Honesty line: `There is no application form on this page. The GitHub organization is the channel that reaches us today; a direct contact address is not published yet.`
+- P/04 Independent Explorers — CTA `How to reach CHORD` → `/contact` · `Email` → `mailto:` (`site.email`)
+- Honesty line: `There is no application form on this page. Email and the GitHub organization are the channels that reach us today.`
 
 **03 · Closing**
 - Statement: `The work is unfinished. That is the reason to start now.`
 - Line: `Bring a question, an artifact, or a piece of work you want to stay with.`
-- Links: `How to reach CHORD` → `/contact` · `GitHub ↗` → external · `Back to the homepage` → `/`
+- Links: `How to reach CHORD` → `/contact` · `Email` → `site.email` · `GitHub ↗` → external · `Back to the homepage` → `/`
 
 **Site footer** — unchanged; the Join page uses the shared footer. `[OPEN]` Whether to add a `Join` link to the footer's Company column or to the nav dropdown is a navigation decision, not a copy decision.
 
@@ -306,7 +307,7 @@ Section eyebrow: `03 · Closing`
 
 | # | Question | Why it matters | Default if unanswered |
 | --- | --- | --- | --- |
-| O1 | Is there any intake channel besides the GitHub organization? | Every participation CTA ultimately lands there | No. Use `/contact` and the existing external link only |
+| O1 | Is there any intake channel besides the GitHub organization? | Every participation CTA ultimately lands there | **Resolved 2026-11-09:** founder supplied an email; see decisions below |
 | O2 | Are Issues and Discussions enabled across the organization? | The contributor pathway says "open an issue" | `[ASSUMPTION]` The `/developers` page already says this; keep the wording, but verify before adding anything stronger |
 | O3 | May the page say *"We do not publish open positions on this page"*? | It is honest, but it is also a statement about company policy | Include the line; remove if sensitive |
 | O4 | Does the page need any compensation, location, or time-zone language? | Conventional hiring pages do; this one is not | No. Omit entirely |
@@ -323,7 +324,7 @@ Founder delegated all open decisions to the implementer. The choices below are n
 
 | # | Decision | Effect |
 | --- | --- | --- |
-| O1 | No second intake channel | All CTAs use `/contact`, `/research`, `/developers`, `/#operators`, or the GitHub organization |
+| O1 | Email added after the spec was written | Founder supplied `zhaoceaseer@gmail.com` on 2026-11-09. Added to `site.ts`, `/contact` (Direct card), Join P/04 secondary and closing links. GitHub remains the public record. Still no hiring intake |
 | O2 | Keep the `/developers` wording verbatim | Contributors read repo guidance, then open an issue. No claim about org-wide Discussions |
 | O3 | Include the neutral line | `We do not publish open positions on this page.` appears under P/01 |
 | O4 | Omit entirely | No compensation, location, or time-zone language |
@@ -340,6 +341,7 @@ Founder delegated all open decisions to the implementer. The choices below are n
 2. Each work row gained a short "status guard" mono line (drawn from §5's status guards) so a reader cannot mistake a research direction for a shipped capability.
 3. The four pathways render as a 2×2 hairline grid rather than four stacked rows — same copy, better density at 1440.
 4. All secondary mono labels use `--step--2` (11px) and `--ink-soft`, not 9px taupe — the site's small taupe fails contrast for body-adjacent text.
+5. **Email supersedes the original "no direct address" assumption.** `/contact` lede and Enterprise paragraph were rewritten, the contact grid became three cards, and the Join honesty line was updated. `site.email` is the single source for the address.
 
 ## 11. Implementation constraints (inherited, restated for a future agent)
 

@@ -79,6 +79,7 @@ const pathways = [
     looksLike:
       'A first message that says what you are trying to do, what you have tried, and what a good outcome would look like. That is enough to start a conversation; it is not an application and we cannot promise a reply time.',
     primary: { label: 'How to reach CHORD', href: '/contact' },
+    secondary: { label: 'Email', href: `mailto:${site.email}` },
   },
 ];
 ---
@@ -273,8 +274,8 @@ const pathways = [
       </div>
 
       <p class="honesty">
-        There is no application form on this page. The GitHub organization is the channel that
-        reaches us today; a direct contact address is not published yet.
+        There is no application form on this page. Email and the GitHub organization are the
+        channels that reach us today.
       </p>
     </div>
   </section>
@@ -291,6 +292,7 @@ const pathways = [
       </p>
       <div class="closing__links">
         <a class="link-arrow" href="/contact">How to reach CHORD</a>
+        <a class="link-arrow" href={`mailto:${site.email}`}>Email</a>
         <a class="link-arrow" href={site.github} target="_blank" rel="noopener">GitHub ↗ External</a>
         <a class="link-arrow" href="/">Back to the homepage</a>
       </div>
