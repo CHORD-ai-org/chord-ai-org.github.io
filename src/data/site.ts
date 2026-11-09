@@ -118,6 +118,7 @@ export const navigation: NavItem[] = [
     children: [
       { label: 'About', href: '/about', meta: 'What CHORD is' },
       { label: 'Vision', href: '/vision', meta: 'Where it goes' },
+      { label: 'Join', href: '/join', meta: 'Open work' },
     ],
   },
   {

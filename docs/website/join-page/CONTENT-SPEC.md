@@ -317,6 +317,30 @@ Section eyebrow: `03 · Closing`
 | O9 | Status strip date and strings | Product status changes faster than prose | Re-check `site.ts` on the day the page ships; do not hard-code "2026-11" in visible copy |
 | O10 | Any Chinese-language version? | Site is English-only today | None |
 
+### Decisions resolved at implementation (2026-11-09)
+
+Founder delegated all open decisions to the implementer. The choices below are now binding; the table above is retained as the record of what was considered.
+
+| # | Decision | Effect |
+| --- | --- | --- |
+| O1 | No second intake channel | All CTAs use `/contact`, `/research`, `/developers`, `/#operators`, or the GitHub organization |
+| O2 | Keep the `/developers` wording verbatim | Contributors read repo guidance, then open an issue. No claim about org-wide Discussions |
+| O3 | Include the neutral line | `We do not publish open positions on this page.` appears under P/01 |
+| O4 | Omit entirely | No compensation, location, or time-zone language |
+| O5 | Keep four pathways | Distinguished by the "how much is already defined" axis; relationship line added |
+| O6 | Company dropdown + mobile menu + footer Company column | `Nav` active state treats `/join` as Company. No sixth top-level nav item (avoids crowding at 1024) |
+| O7 | `/join/` | Directory-style route matching the rest of the site |
+| O8 | Add to sitemap | `public/sitemap.xml` gained `/join/` with `lastmod` 2026-11-09 |
+| O9 | Re-checked `site.ts` on ship day | Status strip matches the four published strings; no hard-coded date in visible copy |
+| O10 | English only | No locale work |
+
+**Implementation deviations from the spec (recorded, not silent)**
+
+1. The hero callback line links to `/` without an `↗` — it is internal, not external.
+2. Each work row gained a short "status guard" mono line (drawn from §5's status guards) so a reader cannot mistake a research direction for a shipped capability.
+3. The four pathways render as a 2×2 hairline grid rather than four stacked rows — same copy, better density at 1440.
+4. All secondary mono labels use `--step--2` (11px) and `--ink-soft`, not 9px taupe — the site's small taupe fails contrast for body-adjacent text.
+
 ## 11. Implementation constraints (inherited, restated for a future agent)
 
 1. Reuse `SectionHead`, `Sigil`, `.btn`, `.link-arrow`, `.label`, `.mono-note`, and the site's section padding/inverted-section treatment. No new design system.
